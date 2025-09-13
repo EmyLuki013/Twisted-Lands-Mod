@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "twisted-lands",
+	"version": "${version}",
+	"name": "Twisted Lands",
+	"description": "Add lots of crazy and bizarre stuff to your world! Like creatures, dungeons and dimensions.",
+	"authors": [
+		"TheLuke013"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/twisted-lands/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.theluke.twisted_lands.TwistedLands"
+		],
+		"client": [
+			"com.theluke.twisted_lands.TwistedLandsClient"
+		]
+	},
+	"mixins": [
+		"twisted-lands.mixins.json",
+		{
+			"config": "twisted-lands.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.17.2",
+		"minecraft": "~1.21.8",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
