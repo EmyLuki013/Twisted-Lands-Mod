@@ -7,6 +7,8 @@ import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.twisted.ModItems;
+
 public class TwistedLands implements ModInitializer {
 	public static final String MOD_ID = "twisted";
 
@@ -17,11 +19,7 @@ public class TwistedLands implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
-
-		LOGGER.info("Hello Fabric world!");
+		ModItems.initialize();
 	}
 
 	public static ResourceLocation id(String path) {

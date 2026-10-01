@@ -1,31 +1,34 @@
 {
-	"schemaVersion": 1,
-	"id": "twisted",
-	"version": "${version}",
-	"name": "Twisted Lands",
-	"description": "This is an example description! Tell everyone what your mod is about!",
-	"authors": [
-		"Me!"
-	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "CC0-1.0",
-	"icon": "assets/twisted/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"com.twisted.TwistedLands"
-		]
-	},
-	"mixins": [
-		"twisted.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=0.19.5",
-		"minecraft": "~1.16.5",
-		"java": ">=8",
-		"fabric": "*"
-	}
+  "schemaVersion": 1,
+  "id": "twisted",
+  "version": "${version}",
+  "name": "Twisted Lands",
+  "description": "A fantasy mod, full of adventure, exploration, challenges, and magic. Some features are based on and inspired by the old Orespawn mod.",
+  "authors": [
+    "Emy Lukie(TheLuke013)",
+    "Berg210",
+    "Tofuuu",
+    "Torrelexado",
+    "JS Herobrine Estones",
+    "Game Player5113",
+    "Dragonwable64",
+    "Sergio182skull"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/twisted/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.twisted.TwistedLands"]
+  },
+  "mixins": ["twisted.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~1.16.5",
+    "java": ">=8",
+    "fabric": "*"
+  }
 }
