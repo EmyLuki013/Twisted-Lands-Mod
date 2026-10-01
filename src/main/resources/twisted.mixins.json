@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "com.twisted.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"ExampleMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
