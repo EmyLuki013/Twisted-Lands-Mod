@@ -1,0 +1,46 @@
+PT-BR
+Direção/Criadores:
+Emy Lukie(TheLuke013) - Criador e principal desenvolvedor do addon
+Omega Sky - Criador de novos conceitos e ideias para o addon
+
+Créditos:
+Berg210 - Desenvolvedor | Fez Crysodrakon King, Skotodrakon Queen, Mobjira e Barras de vida customizadas
+Tofuu - Texture Maker | Fez texturas como itens Ultimate e Maça de Cristal
+Torrelexado - Texture Maker | Fez diversas texturas como blocos de Azuralis
+Ponyo - Texture Maker | Fez algumas texturas para o addon
+
+Colaboradores
+Kin - Fez icone do addon
+JS Herobrine Estones - Fez modelos, animação e textura de mobs como Nastysaurus e Robos
+Game Player5113 - Fez modelos de Blasters dos Robos
+Sergio182skull - Fez modelo das formigas
+Petite - Fez diversas texturas como de equipamentos
+ArturoRivera-154 - Fez animações para o Mobjira Classico
+Dragonwable64 - Modeler | Fez remake dos modelos de Patinho e Veado
+Pineapple - Tradutor | Fez tradução para Chines
+Arisoon(ExKinity Studios) - Código | Fez código da árvore da prosperidade
+Mestre dos Casacos - Modeler | Fez remake dos modelos das armas grandes
+
+
+EN-US
+Direction/Creators:
+Emy Lukie(TheLuke013) - Creator and main developer of the addon
+Omega Sky - Creator of new concepts and ideas for the addon
+
+Credits:
+Berg210 - Developer | Made Crysodrakon King, Skotodrakon Queen, Mobjira and custom Bossbars
+Tofuu - Texture Maker | Made textures such as Ultimate items and Crystal Mace
+Torrelexado - Texture Maker | Made various textures such as Azuralis blocks
+Ponyo - Texture Maker | Made some textures for the addon
+
+Contributors:
+Kin - Made the addon icon
+JS Herobrine Estones - Made models, animation and texture of mobs such as Nastysaurus and Robots
+Game Player5113 - Made models of Robot Blasters
+Sergio182skull - Made model of the ants
+Petite - Made various textures such as equipment textures
+ArturoRivera-154 - Made animations for the classic Mobira game
+Dragonwable64 - Modeler | Remade the Duckling and Deer designs
+Pineapple - Translator | Translated it into Chinese
+Arisoon(ExKinity Studios) - Code | Made prosperity tree code
+Mestre dos Casacos - Modeler | Remade the models of the large weapons
