@@ -2,6 +2,7 @@ package com.twistedteam.twistedlands;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.resources.ResourceLocation;
 
 import org.slf4j.Logger;
@@ -17,11 +18,9 @@ public class TwistedLands implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
+		FuelRegistry.INSTANCE.add(ModItems.CRYSTAL_STICK, 30 * 20);
 
-		LOGGER.info("Hello Fabric world!");
+		ModItems.initialize();
 	}
 
 	public static ResourceLocation id(String path) {

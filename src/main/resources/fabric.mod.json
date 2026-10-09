@@ -3,9 +3,12 @@
 	"id": "twisted",
 	"version": "${version}",
 	"name": "Twisted Lands",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A fantasy mod, full of adventure, exploration, challenges, and magic. Some features are based on and inspired by the old Orespawn mod.",
 	"authors": [
-		"Me!"
+		"Emy Lukie(TheLuke013)",
+		"Berg210",
+		"Tofuuu",
+		"Torrelexado"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
