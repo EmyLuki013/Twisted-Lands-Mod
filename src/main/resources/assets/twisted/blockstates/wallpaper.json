@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "twisted:block/wallpaper"
+    },
+    "facing=east": {
+      "model": "twisted:block/wallpaper",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "twisted:block/wallpaper",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "twisted:block/wallpaper",
+      "y": 270
+    }
+  }
+}

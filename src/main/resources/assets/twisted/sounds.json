@@ -1,0 +1,8 @@
+{
+  "block.backroom_light": {
+    "subtitle": "subtitles.twisted.block.backroom_light",
+    "sounds": [
+      "twisted:block/backroom_light"
+    ]
+  }
+}

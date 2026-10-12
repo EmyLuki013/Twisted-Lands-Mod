@@ -1,5 +1,6 @@
 package com.twistedteam.twistedlands;
 
+import com.twistedteam.twistedlands.world.backroom.Backroom;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.registry.FuelRegistry;
@@ -21,6 +22,9 @@ public class TwistedLands implements ModInitializer {
 		FuelRegistry.INSTANCE.add(ModItems.CRYSTAL_STICK, 30 * 20);
 
 		ModItems.initialize();
+		ModSounds.initialize();
+		ModBlocks.initialize();
+		Backroom.initialize();
 	}
 
 	public static ResourceLocation id(String path) {

@@ -1,0 +1,10 @@
+{
+  "type": "twisted:backroom",
+  "generator": {
+    "type": "twisted:backroom",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "twisted:backroom"
+    }
+  }
+}
