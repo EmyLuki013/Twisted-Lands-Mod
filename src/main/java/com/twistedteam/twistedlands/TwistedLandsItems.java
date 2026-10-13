@@ -22,6 +22,9 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TwistedLandsItems {
     public static Item register(Item item, String id) {
         ResourceLocation itemID = new ResourceLocation(TwistedLands.MOD_ID, id);
@@ -396,6 +399,37 @@ public class TwistedLandsItems {
             new SpawnEggItem(TwistedLandsEntities.RAT, 0xFFFFFF, 0xFFFFFF, new FabricItemSettings()),
             "rat_spawn_egg"
     );
+
+    // Dream World. As receitas vêm do RecipeManagerMixin e a ordem desta lista é a da aba criativa.
+    public static final Item CRYSTAL_COAL = register(new Item(new FabricItemSettings()), "crystal_coal");
+    public static final Item CRYSTAL_APPLE = register(new Item(new FabricItemSettings().food(new FoodProperties.Builder()
+            .nutrition(5).saturationMod(0.85f).alwaysEat()
+            .effect(effect(MobEffects.DAMAGE_BOOST, 3000), 1f)
+            .effect(effect(MobEffects.REGENERATION, 3000), 1f).build())), "crystal_apple");
+    public static final List<Item> DREAM_WORLD = new ArrayList<>(List.of(CRYSTAL_COAL));
+
+    static {
+        for (String id : List.of("raw_jade", "jade_nugget", "jade_ingot", "raw_pink_tourmaline", "pink_tourmaline_nugget",
+                "pink_tourmaline_ingot", "tiger_eye_scrap", "tiger_eye_ingot")) {
+            DREAM_WORLD.add(register(new Item(new FabricItemSettings()), id));
+        }
+        for (CrystalMaterials.Tools tier : CrystalMaterials.Tools.values()) {
+            int damage = tier.swordDamage - 1; // o jogador já soma 1
+            FabricItemSettings settings = new FabricItemSettings().maxCount(1);
+            DREAM_WORLD.add(register(new SwordItem(tier, damage, -2.4f, settings), tier.prefix + "_sword"));
+            DREAM_WORLD.add(register(new PickaxeItem(tier, damage - 2, -2.8f, settings), tier.prefix + "_pickaxe"));
+            DREAM_WORLD.add(register(new AxeItem(tier, damage - 1, -3.0f, settings), tier.prefix + "_axe"));
+            DREAM_WORLD.add(register(new ShovelItem(tier, damage - 3, -3.0f, settings), tier.prefix + "_shovel"));
+            DREAM_WORLD.add(register(new HoeItem(tier, damage - 2, -1.0f, settings), tier.prefix + "_hoe"));
+        }
+        for (CrystalMaterials.Armor material : CrystalMaterials.Armor.values()) {
+            for (ArmorItem.Type type : ArmorItem.Type.values()) {
+                DREAM_WORLD.add(register(new ArmorItem(material, type, new FabricItemSettings().maxCount(1)),
+                        material.prefix + "_" + type.getName()));
+            }
+        }
+        DREAM_WORLD.add(CRYSTAL_APPLE);
+    }
 
     // No addon os efeitos vinham sem partícula, mas com o ícone na tela.
     private static MobEffectInstance effect(MobEffect type, int ticks) {

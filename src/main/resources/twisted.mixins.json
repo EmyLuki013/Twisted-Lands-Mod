@@ -9,7 +9,8 @@
 		"BrewingPotionSlotMixin",
 		"BrewingStandBlockEntityMixin",
 		"PotionBrewingMixin",
-		"LootDataManagerMixin"
+		"LootDataManagerMixin",
+		"RecipeManagerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -11,8 +11,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.level.block.Block;
 
 import java.util.List;
@@ -133,6 +135,9 @@ public class TwistedLandsItemGroups {
             entries.accept(TwistedLandsItems.WATER_BLASTER);
             entries.accept(TwistedLandsItems.MANTIS_CLAW);
             entries.accept(TwistedLandsItems.LASER_CHARGE);
+            TwistedLandsItems.DREAM_WORLD.stream()
+                    .filter(item -> item instanceof TieredItem || item instanceof ArmorItem)
+                    .forEach(entries::accept);
         });
 
         ItemGroupEvents.modifyEntriesEvent(TWISTED_GROUP_INGREDIENTS_KEY).register(entries -> {
@@ -152,6 +157,9 @@ public class TwistedLandsItemGroups {
             entries.accept(TwistedLandsItems.RAINBOW_ANT_ABDOMEN);
             entries.accept(TwistedLandsItems.COMBAT_POTION);
             entries.accept(TwistedLandsItems.POWERED_COMBAT_POTION);
+            TwistedLandsItems.DREAM_WORLD.stream()
+                    .filter(item -> !(item instanceof TieredItem || item instanceof ArmorItem || item.isEdible()))
+                    .forEach(entries::accept);
         });
 
         ItemGroupEvents.modifyEntriesEvent(TWISTED_GROUP_BLOCKS_KEY).register(entries -> {
@@ -245,6 +253,7 @@ public class TwistedLandsItemGroups {
             entries.accept(TwistedLandsItems.CHEESE);
             entries.accept(TwistedLandsItems.MAGIC_APPLE);
             entries.accept(TwistedLandsItems.SALT);
+            entries.accept(TwistedLandsItems.CRYSTAL_APPLE);
         });
     }
 }

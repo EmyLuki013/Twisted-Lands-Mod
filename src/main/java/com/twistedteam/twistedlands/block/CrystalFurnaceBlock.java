@@ -1,13 +1,11 @@
 package com.twistedteam.twistedlands.block;
 
-import com.twistedteam.twistedlands.TwistedLands;
 import com.twistedteam.twistedlands.TwistedLandsBlocks;
+import com.twistedteam.twistedlands.TwistedLandsItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +13,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.RecipeBookType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.CookingBookCategory;
@@ -31,13 +28,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Crystal Furnace. No addon era uma grade de crafting (o item em cima do crystal coal, pronto na hora). Aqui é
- * uma fornalha de verdade, que só queima o que estiver na tag twisted:crystal_furnace_fuel e só faz as receitas
- * twisted:crystal_smelting.
+ * uma fornalha de verdade, que só queima Crystal Coal (ou o bloco dele) e só faz as receitas twisted:crystal_smelting.
  */
 public class CrystalFurnaceBlock extends AbstractFurnaceBlock {
-    public static final TagKey<Item> FUEL = TagKey.create(Registries.ITEM, TwistedLands.id("crystal_furnace_fuel"));
-    // Igual ao carvão.
-    private static final int BURN_TIME = 1600;
+    // Iguais ao carvão e ao bloco de carvão.
+    private static final int COAL_BURN_TIME = 1600;
+    private static final int BLOCK_BURN_TIME = 16000;
     private static final Component TITLE = Component.translatable("container.twisted.crystal_furnace");
 
     public CrystalFurnaceBlock(Properties properties) {
@@ -62,8 +58,14 @@ public class CrystalFurnaceBlock extends AbstractFurnaceBlock {
         }
     }
 
+    private static int burnTime(ItemStack stack) {
+        if (stack.is(TwistedLandsItems.CRYSTAL_COAL)) return COAL_BURN_TIME;
+        if (stack.is(TwistedLandsBlocks.CRYSTAL_COAL_BLOCK.asItem())) return BLOCK_BURN_TIME;
+        return 0;
+    }
+
     private static boolean isCrystalFuel(ItemStack stack) {
-        return stack.is(FUEL);
+        return burnTime(stack) > 0;
     }
 
     public static class Entity extends AbstractFurnaceBlockEntity {
@@ -83,7 +85,7 @@ public class CrystalFurnaceBlock extends AbstractFurnaceBlock {
 
         @Override
         protected int getBurnDuration(ItemStack fuel) {
-            return isCrystalFuel(fuel) ? BURN_TIME : 0;
+            return burnTime(fuel);
         }
 
         // Funil e afins: o slot de combustível só aceita o combustível de cristal.

@@ -36,6 +36,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
+import java.util.Map;
 
 public class TwistedLandsBlocks {
 
@@ -370,7 +371,7 @@ public class TwistedLandsBlocks {
 
     public static final RecipeSerializer<CrystalFurnaceBlock.Smelting> CRYSTAL_SMELTING_SERIALIZER = Registry.register(
             BuiltInRegistries.RECIPE_SERIALIZER, TwistedLands.id("crystal_smelting"),
-            new SimpleCookingSerializer<>(CrystalFurnaceBlock.Smelting::new, 200));
+            new SimpleCookingSerializer<>(CrystalFurnaceBlock.Smelting::new, 133));
 
     // Mais baixa que a Sacred Torch e sem os blocos de luz. Fogo na altura do addon (0.8).
     public static final Block CRYSTAL_TORCH = register(
@@ -440,6 +441,10 @@ public class TwistedLandsBlocks {
             CRYSTAL_MUSHROOM_STEM, PURPLE_CRYSTAL_FLOWER, RED_CRYSTAL_FLOWER, CRYSTAL_CRAFTING_TABLE, CRYSTAL_FURNACE,
             CRYSTAL_TORCH, CRYSTAL_COAL_BLOCK, JADE_BLOCK, JADE_BRICKS, PINK_TOURMALINE_BLOCK, PINK_TOURMALINE_BRICKS,
             TIGERS_EYE_BLOCK);
+
+    // Minérios da Dream World e o item que dropam (com fortuna e toque de seda, como os do vanilla).
+    public static final Map<Block, String> ORE_DROPS = Map.of(CRYSTAL_COAL_ORE, "crystal_coal", JADE_ORE, "raw_jade",
+            PINK_TOURMALINE_ORE, "raw_pink_tourmaline");
 
     private static Block registerBlockOnly(Block block, String id) {
         return Registry.register(BuiltInRegistries.BLOCK, TwistedLands.id(id), block);
