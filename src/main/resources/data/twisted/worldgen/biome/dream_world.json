@@ -26,5 +26,25 @@
   },
   "spawn_costs": {},
   "carvers": {},
-  "features": []
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "twisted:dream_crystal_coal_ore",
+      "twisted:dream_pink_tourmaline_ore",
+      "twisted:dream_jade_ore",
+      "twisted:dream_tigers_eye_debris"
+    ],
+    [],
+    [],
+    [
+      "twisted:dream_red_crystal_tree",
+      "twisted:dream_crystal_corn_patch"
+    ],
+    []
+  ]
 }

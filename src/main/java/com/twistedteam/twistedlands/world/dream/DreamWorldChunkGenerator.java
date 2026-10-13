@@ -23,6 +23,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.PositionalRandomFactory;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.blending.Blender;
+import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
 import net.minecraft.world.level.levelgen.synth.SimplexNoise;
 
 import java.util.List;
@@ -32,8 +33,12 @@ import java.util.concurrent.Executor;
 /**
  * Chão da Dream World, portado do TerrainGen do addon (relevo PLAINS). De baixo pra cima: bedrock em y31 a 33
  * (a dream_world_base_chunk), dream stone até y62, e a planície de y61 a y65 com grama da Dream World em cima de
- * terra, alguns pontos de cascalho e lagos rasos (todos em y61) com fundo de areia. As ilhas de cristal ficam no alto e não são
- * geradas aqui.
+ * terra, alguns pontos de cascalho e lagos rasos (todos em y61) com fundo de areia.
+ * <p>
+ * No alto ficam as ilhas de cristal, que no addon eram a feature rule dream_world_crystal_island: uma conta por
+ * coluna que decide se cada y de 110 a 157 é kyanita, com o topo coberto de crystal grass. Aqui a mesma conta roda
+ * no gerador, então a ilha sai igual em qualquer ordem de chunks e já entra no heightmap (árvore e estrutura
+ * pousam nela).
  */
 public class DreamWorldChunkGenerator extends ChunkGenerator {
     public static final Codec<DreamWorldChunkGenerator> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -45,7 +50,10 @@ public class DreamWorldChunkGenerator extends ChunkGenerator {
     private static final int BEDROCK_Y = 31;
     // Chão da planície no addon (baseY). O relevo sobe até 4 blocos a partir daqui.
     private static final int BASE_Y = 61;
-    private static final int MAX_SURFACE_Y = BASE_Y + 4;
+    // Ilhas: 48 camadas a partir de y110, mais grossas no y134 e no centro de cada quadrado de 256x256.
+    private static final int ISLAND_MIN_Y = 110;
+    private static final int ISLAND_LAYERS = 48;
+    private static final int ISLAND_TILE = 256;
 
     private static final BlockState BEDROCK = Blocks.BEDROCK.defaultBlockState();
     private static final BlockState STONE = TwistedLandsBlocks.DREAM_STONE.defaultBlockState();
@@ -55,12 +63,21 @@ public class DreamWorldChunkGenerator extends ChunkGenerator {
     private static final BlockState SAND = Blocks.SAND.defaultBlockState();
     private static final BlockState WATER = Blocks.WATER.defaultBlockState();
     private static final BlockState AIR = Blocks.AIR.defaultBlockState();
+    private static final BlockState KYANITE = TwistedLandsBlocks.KYANITE.defaultBlockState();
+    private static final BlockState CRYSTAL_GRASS = TwistedLandsBlocks.CRYSTAL_GRASS.defaultBlockState();
 
-    private record Noises(RandomState owner, SimplexNoise terrain, SimplexNoise water, PositionalRandomFactory random) {
+    private record Noises(RandomState owner, SimplexNoise terrain, SimplexNoise water, ImprovedNoise islands,
+                          PositionalRandomFactory random) {
     }
 
-    // Uma coluna da planície: y do bloco de cima, se é água e de que é o enchimento.
-    private record Column(int top, boolean water, BlockState fill) {
+    /**
+     * Uma coluna: y do bloco de cima da planície, se é água, de que é o enchimento, quais das 48 camadas de ilha
+     * são kyanita (um bit por camada) e o y da kyanita mais alta (-1 sem ilha).
+     */
+    private record Column(int ground, boolean water, BlockState fill, long islands, int islandTop) {
+        int top() {
+            return islandTop >= 0 ? islandTop + 1 : ground;
+        }
     }
 
     private volatile Noises noises;
@@ -84,7 +101,7 @@ public class DreamWorldChunkGenerator extends ChunkGenerator {
         if (current == null || current.owner() != randomState) {
             PositionalRandomFactory factory = randomState.getOrCreateRandomFactory(TwistedLands.id("dream_world"));
             current = new Noises(randomState, new SimplexNoise(factory.fromHashOf("terrain")),
-                    new SimplexNoise(factory.fromHashOf("water")), factory);
+                    new SimplexNoise(factory.fromHashOf("water")), new ImprovedNoise(factory.fromHashOf("islands")), factory);
             noises = current;
         }
         return current;
@@ -105,17 +122,49 @@ public class DreamWorldChunkGenerator extends ChunkGenerator {
         // Lago e rio do addon. Lá o rio descia de 1 a 4 blocos seguindo o relevo, então a água ficava em alturas
         // diferentes lado a lado. Água gerada com o chunk não escorre sozinha e esses degraus ficavam suspensos,
         // por isso toda a água fica no mesmo nível, o chão da planície.
+        long islands = islands(noises.islands(), x, z);
+        int islandTop = islands == 0 ? -1 : ISLAND_MIN_Y + 63 - Long.numberOfLeadingZeros(islands);
         if (fbm(noises.water(), x * 0.004, z * 0.004) < -0.25) {
-            return new Column(BASE_Y, true, SAND);
+            return new Column(BASE_Y, true, SAND, islands, islandTop);
         }
-        return new Column(BASE_Y + height, false, height >= 4 ? STONE : DIRT);
+        return new Column(BASE_Y + height, false, height >= 4 ? STONE : DIRT, islands, islandTop);
+    }
+
+    // A conta das features islands e islands_edge do addon. O query.noise do Bedrock é Perlin, como o ImprovedNoise.
+    private static long islands(ImprovedNoise noise, int x, int z) {
+        int centerX = Math.floorDiv(x, ISLAND_TILE) * ISLAND_TILE + ISLAND_TILE / 2;
+        int centerZ = Math.floorDiv(z, ISLAND_TILE) * ISLAND_TILE + ISLAND_TILE / 2;
+        double distance = (Math.abs(x - centerX) + Math.abs(z - centerZ)) / (ISLAND_TILE * 2.5);
+        double base = 1 - distance / 0.4;
+        double noise1 = noise.noise(x / 64.0, 0, z / 64.0);
+        double noise2 = noise.noise((x - 8231) / 64.0, 0, (z - 8231) / 64.0);
+        if (base + Math.max(Math.abs(noise1), Math.abs(noise2)) / 3 <= 0.35) {
+            return 0;
+        }
+        long layers = 0;
+        for (int i = 0; i < ISLAND_LAYERS; i++) {
+            double t = i / 64.0;
+            double blend = t * t * (3 - 2 * t);
+            double interpolation = noise1 + (noise2 - noise1) * blend;
+            if (interpolation / 3 + base - Math.abs(i - 24) / 32.0 > 0.35) {
+                layers |= 1L << i;
+            }
+        }
+        return layers;
     }
 
     private static BlockState stateAt(Noises noises, Column column, int x, int y, int z) {
-        if (y < BEDROCK_Y || y > column.top()) {
+        if (y > column.ground()) {
+            int layer = y - ISLAND_MIN_Y;
+            if (layer >= 0 && layer < ISLAND_LAYERS && (column.islands() & 1L << layer) != 0) {
+                return KYANITE;
+            }
+            return y == column.islandTop() + 1 ? CRYSTAL_GRASS : AIR;
+        }
+        if (y < BEDROCK_Y) {
             return AIR;
         }
-        if (y == column.top()) {
+        if (y == column.ground()) {
             return column.water() ? WATER : GRASS;
         }
         // A base do addon: camada cheia de bedrock e mais 2 com 52 e 69 blocos de dream stone em 256.
@@ -149,7 +198,7 @@ public class DreamWorldChunkGenerator extends ChunkGenerator {
 
         // Mesmo esquema do BackroomChunkGenerator: escreve direto nas seções, com o lock delas.
         int firstSection = chunk.getSectionIndex(BEDROCK_Y);
-        int lastSection = chunk.getSectionIndex(MAX_SURFACE_Y);
+        int lastSection = chunk.getSectionIndex(ISLAND_MIN_Y + ISLAND_LAYERS);
         for (int i = firstSection; i <= lastSection; i++) {
             chunk.getSection(i).acquire();
         }
@@ -159,6 +208,9 @@ public class DreamWorldChunkGenerator extends ChunkGenerator {
                     Column column = column(noises, minX + lx, minZ + lz);
                     for (int y = BEDROCK_Y; y <= column.top(); y++) {
                         BlockState state = stateAt(noises, column, minX + lx, y, minZ + lz);
+                        if (state.isAir()) {
+                            continue;
+                        }
                         LevelChunkSection section = chunk.getSection(chunk.getSectionIndex(y));
                         section.setBlockState(lx, y & 15, lz, state, false);
                         oceanFloor.update(lx, y, lz, state);
