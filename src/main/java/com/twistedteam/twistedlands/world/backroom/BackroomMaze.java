@@ -107,13 +107,14 @@ public final class BackroomMaze {
 
     /**
      * Canto da estrutura de saída neste chunk, ou null. No máximo uma por chunk, com o mesmo sorteio do Bedrock,
-     * mas pulando as que nasceriam com as 4 portas de cara pra parede (no Bedrock era 1 em 25, ficava inútil).
+     * mas só onde as 4 portas dão pra corredor. No Bedrock a estrutura nascia em qualquer lugar e várias portas
+     * ficavam de cara pra parede. Esse filtro também deixa as saídas umas 2,5x mais raras.
      */
     @Nullable
     public static BlockPos exitIn(ChunkPos chunk) {
         for (int z = chunk.getMinBlockZ(); z <= chunk.getMaxBlockZ(); z++) {
             for (int x = chunk.getMinBlockX(); x <= chunk.getMaxBlockX(); x++) {
-                if (isCellCenter(x, z) && (hash(x, z) % 1000) / 1000.0 < EXIT_CHANCE && hasOpenDoor(x, z)) {
+                if (isCellCenter(x, z) && (hash(x, z) % 1000) / 1000.0 < EXIT_CHANCE && allDoorsOpen(x, z)) {
                     return new BlockPos(x, FLOOR_Y, z);
                 }
             }
@@ -121,10 +122,11 @@ public final class BackroomMaze {
         return null;
     }
 
-    // A backroom_exit é 5x5 com uma porta no meio de cada lado. O bloco na frente da porta precisa ser corredor.
-    private static boolean hasOpenDoor(int cornerX, int cornerZ) {
-        return isPath(cornerX + 2, cornerZ) || isPath(cornerX, cornerZ + 2)
-                || isPath(cornerX + 4, cornerZ + 2) || isPath(cornerX + 2, cornerZ + 4);
+    // A backroom_exit é 5x5 com uma porta no meio de cada lado. Na frente de cada porta a estrutura não tem bloco,
+    // então fica o que o labirinto gerou ali: precisa ser corredor, senão a porta fica tampada.
+    private static boolean allDoorsOpen(int cornerX, int cornerZ) {
+        return isPath(cornerX + 2, cornerZ) && isPath(cornerX, cornerZ + 2)
+                && isPath(cornerX + 4, cornerZ + 2) && isPath(cornerX + 2, cornerZ + 4);
     }
 
     /** Posição pra ficar de pé no corredor mais próximo de x/z (procura em anéis de células). */

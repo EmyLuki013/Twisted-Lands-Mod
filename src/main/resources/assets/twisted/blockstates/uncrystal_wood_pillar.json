@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "twisted:block/uncrystal_wood_pillar"
+    },
+    "axis=z": {
+      "model": "twisted:block/uncrystal_wood_pillar_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "twisted:block/uncrystal_wood_pillar_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

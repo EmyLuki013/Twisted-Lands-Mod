@@ -9,6 +9,7 @@ public class TwistedLandsClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
-		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.WALLPAPER, RenderType.cutout());
+		BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), ModBlocks.WALLPAPER, ModBlocks.WALLPAPER_CORNER);
+		BackroomLampBuzz.initialize();
 	}
 }

@@ -5,6 +5,17 @@
     "twisted:wallpaper_planks",
     "twisted:wallpaper_smooth",
     "twisted:wallpaper_smooth_lamp",
-    "twisted:wallpaper"
+    "twisted:wallpaper",
+    "twisted:pool_tiles",
+    "twisted:uncrystal_wood_planks",
+    "twisted:wallpaper_mosaic",
+    "twisted:wallpaper_smooth_dark",
+    "twisted:wallpaper_smooth_dark_lamp",
+    "twisted:wallpaper_tiled",
+    "twisted:wallpaper_tiled_dark",
+    "twisted:wallpaper_tiled_dark_lamp",
+    "twisted:wallpaper_tiled_lamp",
+    "twisted:uncrystal_wood_pillar",
+    "twisted:wallpaper_corner"
   ]
 }

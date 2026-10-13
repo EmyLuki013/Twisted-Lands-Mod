@@ -8,5 +8,16 @@
   "block.twisted.wallpaper_smooth": "Wallpaper Smooth",
   "block.twisted.wallpaper_smooth_lamp": "Wallpaper Smooth Lamp",
   "block.twisted.wallpaper": "Wallpaper",
+  "block.twisted.pool_tiles": "Pool Tiles",
+  "block.twisted.uncrystal_wood_pillar": "Uncrystal Wood Pillar",
+  "block.twisted.uncrystal_wood_planks": "Uncrystal Wood Planks",
+  "block.twisted.wallpaper_corner": "Wallpaper Corner",
+  "block.twisted.wallpaper_mosaic": "Wallpaper Mosaic",
+  "block.twisted.wallpaper_smooth_dark": "Wallpaper Smooth Dark",
+  "block.twisted.wallpaper_smooth_dark_lamp": "Wallpaper Smooth Dark Lamp",
+  "block.twisted.wallpaper_tiled": "Wallpaper Tiled",
+  "block.twisted.wallpaper_tiled_dark": "Wallpaper Tiled Dark",
+  "block.twisted.wallpaper_tiled_dark_lamp": "Wallpaper Tiled Dark Lamp",
+  "block.twisted.wallpaper_tiled_lamp": "Wallpaper Tiled Lamp",
   "subtitles.twisted.block.backroom_light": "Lamp buzzes"
 }

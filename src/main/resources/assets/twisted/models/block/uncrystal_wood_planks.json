@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "twisted:block/uncrystal_wood_planks"
+  }
+}
