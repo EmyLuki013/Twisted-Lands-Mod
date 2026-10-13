@@ -215,5 +215,8 @@
   "item.twisted.jade_chestplate": "Jade Chestplate",
   "item.twisted.jade_leggings": "Jade Leggings",
   "item.twisted.jade_boots": "Jade Boots",
-  "item.twisted.crystal_apple": "Crystal Apple"
+  "item.twisted.crystal_apple": "Crystal Apple",
+  "item.twisted.crystal_corn": "Crystal Corn Cob",
+  "block.twisted.crystal_corn_plant_head": "Crystal Corn Plant",
+  "block.twisted.crystal_corn_plant_body": "Crystal Corn Plant"
 }

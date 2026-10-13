@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {"cross": "twisted:block/crystal_corn_plant_stage_4"}
+}

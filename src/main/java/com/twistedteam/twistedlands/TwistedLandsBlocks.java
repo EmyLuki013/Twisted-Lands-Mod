@@ -21,6 +21,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.DropperBlock;
@@ -272,13 +273,16 @@ public class TwistedLandsBlocks {
     );
 
     // Pé de tomate. Quem planta é o item tomato.
+    private static final CropPlantHeadBlock.Crop TOMATO_CROP = new CropPlantHeadBlock.Crop(() -> Blocks.GRASS_BLOCK,
+            () -> TwistedLandsBlocks.TOMATO_PLANT_HEAD, () -> TwistedLandsBlocks.TOMATO_PLANT_BODY, () -> TwistedLandsItems.TOMATO);
+
     public static final Block TOMATO_PLANT_HEAD = registerBlockOnly(
-            new TomatoPlantHeadBlock(tomatoPlant()),
+            new CropPlantHeadBlock(TOMATO_CROP, tomatoPlant()),
             "tomato_plant_head"
     );
 
     public static final Block TOMATO_PLANT_BODY = registerBlockOnly(
-            new TomatoPlantBodyBlock(tomatoPlant()),
+            new CropPlantBodyBlock(TOMATO_CROP, tomatoPlant()),
             "tomato_plant_body"
     );
 
@@ -433,6 +437,21 @@ public class TwistedLandsBlocks {
             new CrystalBlock(crystal(MapColor.TERRACOTTA_GRAY, 3.0f, 3.0f, SoundType.AMETHYST).requiresCorrectToolForDrops(),
                     UniformInt.of(1, 5)),
             "tigers_eye_debris"
+    );
+
+    // Pé de milho de cristal, igual ao de tomate mas na crystal grass. Quem planta é o item crystal_corn.
+    private static final CropPlantHeadBlock.Crop CRYSTAL_CORN_CROP = new CropPlantHeadBlock.Crop(() -> TwistedLandsBlocks.CRYSTAL_GRASS,
+            () -> TwistedLandsBlocks.CRYSTAL_CORN_PLANT_HEAD, () -> TwistedLandsBlocks.CRYSTAL_CORN_PLANT_BODY,
+            () -> TwistedLandsItems.CRYSTAL_CORN);
+
+    public static final Block CRYSTAL_CORN_PLANT_HEAD = registerBlockOnly(
+            new CropPlantHeadBlock(CRYSTAL_CORN_CROP, tomatoPlant()),
+            "crystal_corn_plant_head"
+    );
+
+    public static final Block CRYSTAL_CORN_PLANT_BODY = registerBlockOnly(
+            new CropPlantBodyBlock(CRYSTAL_CORN_CROP, tomatoPlant()),
+            "crystal_corn_plant_body"
     );
 
     // Blocos que só dropam eles mesmos. A tabela de loot é criada no LootDataManagerMixin, sem JSON.

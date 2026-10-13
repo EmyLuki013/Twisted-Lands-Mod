@@ -218,5 +218,8 @@
   "item.twisted.jade_chestplate": "Peitoral de Jade",
   "item.twisted.jade_leggings": "Calças de Jade",
   "item.twisted.jade_boots": "Botas de Jade",
-  "item.twisted.crystal_apple": "Maçã de Cristal"
+  "item.twisted.crystal_apple": "Maçã de Cristal",
+  "item.twisted.crystal_corn": "Espiga de Milho Cristalino",
+  "block.twisted.crystal_corn_plant_head": "Pé de Milho Cristalino",
+  "block.twisted.crystal_corn_plant_body": "Pé de Milho Cristalino"
 }

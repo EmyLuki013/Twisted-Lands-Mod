@@ -254,6 +254,7 @@ public class TwistedLandsItemGroups {
             entries.accept(TwistedLandsItems.MAGIC_APPLE);
             entries.accept(TwistedLandsItems.SALT);
             entries.accept(TwistedLandsItems.CRYSTAL_APPLE);
+            entries.accept(TwistedLandsItems.CRYSTAL_CORN);
         });
     }
 }

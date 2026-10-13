@@ -1,0 +1,7 @@
+{
+  "type": "twisted:dream_world",
+  "generator": {
+    "type": "twisted:dream_world",
+    "biome_source": {"type": "minecraft:fixed", "biome": "twisted:dream_world"}
+  }
+}

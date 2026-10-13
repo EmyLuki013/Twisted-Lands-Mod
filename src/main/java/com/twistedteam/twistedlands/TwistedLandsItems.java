@@ -406,6 +406,9 @@ public class TwistedLandsItems {
             .nutrition(5).saturationMod(0.85f).alwaysEat()
             .effect(effect(MobEffects.DAMAGE_BOOST, 3000), 1f)
             .effect(effect(MobEffects.REGENERATION, 3000), 1f).build())), "crystal_apple");
+    // Come ou planta (na crystal grass), como o tomate.
+    public static final Item CRYSTAL_CORN = register(new ItemNameBlockItem(TwistedLandsBlocks.CRYSTAL_CORN_PLANT_HEAD,
+            new FabricItemSettings().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.75f).build())), "crystal_corn");
     public static final List<Item> DREAM_WORLD = new ArrayList<>(List.of(CRYSTAL_COAL));
 
     static {
@@ -429,6 +432,7 @@ public class TwistedLandsItems {
             }
         }
         DREAM_WORLD.add(CRYSTAL_APPLE);
+        DREAM_WORLD.add(CRYSTAL_CORN);
     }
 
     // No addon os efeitos vinham sem partícula, mas com o ícone na tela.
