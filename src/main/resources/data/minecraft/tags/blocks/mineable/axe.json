@@ -1,4 +1,4 @@
 {
   "replace": false,
-  "values": ["twisted:candy_cane_log", "twisted:candy_cane_wood"]
+  "values": ["twisted:candy_cane_log", "twisted:candy_cane_wood", "twisted:crystal_wood_log", "twisted:stripped_crystal_wood_log", "twisted:red_crystal_wood_log", "twisted:stripped_red_crystal_wood_log", "twisted:crystal_wood_planks", "twisted:red_crystal_wood_planks", "twisted:crystal_mushroom_stem", "twisted:crystal_crafting_table"]
 }

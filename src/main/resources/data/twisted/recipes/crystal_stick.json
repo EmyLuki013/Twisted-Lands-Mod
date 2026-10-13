@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["#", "#"],
+  "key": {
+    "#": [{"item": "twisted:crystal_wood_planks"}, {"item": "twisted:red_crystal_wood_planks"}]
+  },
+  "result": {"item": "twisted:crystal_stick", "count": 4}
+}

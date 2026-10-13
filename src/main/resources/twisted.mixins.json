@@ -8,7 +8,8 @@
 		"ServerPlayerGameModeMixin",
 		"BrewingPotionSlotMixin",
 		"BrewingStandBlockEntityMixin",
-		"PotionBrewingMixin"
+		"PotionBrewingMixin",
+		"LootDataManagerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

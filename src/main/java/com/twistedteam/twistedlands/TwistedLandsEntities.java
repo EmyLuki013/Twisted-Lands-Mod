@@ -5,6 +5,7 @@ import com.twistedteam.twistedlands.projectiles.ThrownAxeEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -72,6 +73,17 @@ public class TwistedLandsEntities {
                     .defaultAttributes(CandyAntEntity::createAttributes)
                     .build());
 
+    // Sem collision_box no addon vale o padrão do Bedrock (1 x 1), vezes o scale 0.5.
+    public static final EntityType<RatEntity> RAT = Registry.register(BuiltInRegistries.ENTITY_TYPE,
+            TwistedLands.id("rat"),
+            FabricEntityTypeBuilder.<RatEntity>createMob()
+                    .spawnGroup(MobCategory.CREATURE)
+                    .entityFactory(RatEntity::new)
+                    .dimensions(EntityDimensions.scalable(0.5f, 0.5f))
+                    .defaultAttributes(RatEntity::createAttributes)
+                    .spawnRestriction(SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, RatEntity::canSpawn)
+                    .build());
+
     public static final EntityType<LittleMintEntity> LITTLE_MINT = Registry.register(BuiltInRegistries.ENTITY_TYPE,
             TwistedLands.id("little_mint"),
             FabricEntityTypeBuilder.<LittleMintEntity>create(MobCategory.MISC, LittleMintEntity::new)
@@ -92,5 +104,7 @@ public class TwistedLandsEntities {
     public static void initialize() {
         // No addon a formiga arco-íris nasce em todo o overworld, no subsolo (as condições ficam no canSpawn).
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), MobCategory.MONSTER, RAINBOW_ANT, 1, 1, 3);
+        // O rato é population "animal" no addon, nos biomas com a tag caves (lush, dripstone e deep dark).
+        BiomeModifications.addSpawn(BiomeSelectors.tag(ConventionalBiomeTags.CAVES), MobCategory.CREATURE, RAT, 100, 1, 4);
     }
 }

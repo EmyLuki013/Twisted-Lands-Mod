@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {"cross": "twisted:block/purple_crystal_flower"}
+}

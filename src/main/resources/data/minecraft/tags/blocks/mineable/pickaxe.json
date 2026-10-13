@@ -27,6 +27,19 @@
     "twisted:chocolate_bar_block",
     "twisted:sugar_block",
     "twisted:salt_ore",
-    "twisted:salt_block"
+    "twisted:salt_block",
+    "twisted:kyanite",
+    "twisted:dream_stone",
+    "twisted:crystal_furnace",
+    "twisted:crystal_coal_ore",
+    "twisted:crystal_coal_block",
+    "twisted:jade_ore",
+    "twisted:jade_block",
+    "twisted:jade_bricks",
+    "twisted:pink_tourmaline_ore",
+    "twisted:pink_tourmaline_block",
+    "twisted:pink_tourmaline_bricks",
+    "twisted:tigers_eye_debris",
+    "twisted:tigers_eye_block"
   ]
 }

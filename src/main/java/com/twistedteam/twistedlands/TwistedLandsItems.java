@@ -391,6 +391,12 @@ public class TwistedLandsItems {
             "rainbow_ant_spawn_egg"
     );
 
+    // Mesma coisa do ovo da formiga: textura do addon, sem tingir.
+    public static final Item RAT_SPAWN_EGG = register(
+            new SpawnEggItem(TwistedLandsEntities.RAT, 0xFFFFFF, 0xFFFFFF, new FabricItemSettings()),
+            "rat_spawn_egg"
+    );
+
     // No addon os efeitos vinham sem partícula, mas com o ícone na tela.
     private static MobEffectInstance effect(MobEffect type, int ticks) {
         return new MobEffectInstance(type, ticks, 0, false, false, true);

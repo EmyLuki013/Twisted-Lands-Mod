@@ -17,6 +17,10 @@ public class TwistedLandsSounds {
 
     public static final SoundEvent BACKROOM_LIGHT = register("block.backroom_light");
 
+    public static final SoundEvent RAT_AMBIENT = register("rat.ambient");
+    public static final SoundEvent RAT_HURT = register("rat.hurt");
+    public static final SoundEvent RAT_DEATH = register("rat.death");
+
     private static SoundEvent register(String name) {
         ResourceLocation id = new ResourceLocation(TwistedLands.MOD_ID, name);
         return Registry.register(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));

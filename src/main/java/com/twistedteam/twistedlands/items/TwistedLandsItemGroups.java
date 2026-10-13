@@ -13,6 +13,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+
+import java.util.List;
 
 public class TwistedLandsItemGroups {
 
@@ -199,6 +202,23 @@ public class TwistedLandsItemGroups {
             entries.accept(TwistedLandsBlocks.RUBY_ORE);
             entries.accept(TwistedLandsBlocks.DEEPSLATE_RUBY_ORE);
             entries.accept(TwistedLandsBlocks.RUBY_BLOCK);
+
+            // Dream World
+            for (Block block : List.of(TwistedLandsBlocks.CRYSTAL_GRASS, TwistedLandsBlocks.KYANITE,
+                    TwistedLandsBlocks.DREAM_WORLD_GRASS_BLOCK, TwistedLandsBlocks.DREAM_STONE, TwistedLandsBlocks.CRYSTAL_WOOD_LOG,
+                    TwistedLandsBlocks.STRIPPED_CRYSTAL_WOOD_LOG, TwistedLandsBlocks.CRYSTAL_WOOD_PLANKS,
+                    TwistedLandsBlocks.RED_CRYSTAL_WOOD_LOG, TwistedLandsBlocks.STRIPPED_RED_CRYSTAL_WOOD_LOG,
+                    TwistedLandsBlocks.RED_CRYSTAL_WOOD_PLANKS, TwistedLandsBlocks.CRYSTAL_MUSHROOM_STEM,
+                    TwistedLandsBlocks.CRYSTAL_LEAVES_BLUE, TwistedLandsBlocks.CRYSTAL_LEAVES_GREEN, TwistedLandsBlocks.CRYSTAL_LEAVES_PINK,
+                    TwistedLandsBlocks.CRYSTAL_LEAVES_PURPLE, TwistedLandsBlocks.CRYSTAL_LEAVES_PURPLISH_RED,
+                    TwistedLandsBlocks.PURPLE_CRYSTAL_FLOWER, TwistedLandsBlocks.RED_CRYSTAL_FLOWER,
+                    TwistedLandsBlocks.CRYSTAL_CRAFTING_TABLE, TwistedLandsBlocks.CRYSTAL_FURNACE, TwistedLandsBlocks.CRYSTAL_TORCH,
+                    TwistedLandsBlocks.CRYSTAL_COAL_ORE, TwistedLandsBlocks.CRYSTAL_COAL_BLOCK, TwistedLandsBlocks.JADE_ORE,
+                    TwistedLandsBlocks.JADE_BLOCK, TwistedLandsBlocks.JADE_BRICKS, TwistedLandsBlocks.PINK_TOURMALINE_ORE,
+                    TwistedLandsBlocks.PINK_TOURMALINE_BLOCK, TwistedLandsBlocks.PINK_TOURMALINE_BRICKS,
+                    TwistedLandsBlocks.TIGERS_EYE_DEBRIS, TwistedLandsBlocks.TIGERS_EYE_BLOCK)) {
+                entries.accept(block);
+            }
         });
         ItemGroupEvents.modifyEntriesEvent(TWISTED_GROUP_SPAWN_EGG_KEY).register(entries -> {
             entries.accept(TwistedLandsItems.APPLE_COW_SPAWN_EGG);
@@ -208,6 +228,7 @@ public class TwistedLandsItemGroups {
             entries.accept(TwistedLandsItems.MANTIS_SPAWN_EGG);
             entries.accept(TwistedLandsItems.NASTYSAURUS_SPAWN_EGG);
             entries.accept(TwistedLandsItems.RAINBOW_ANT_SPAWN_EGG);
+            entries.accept(TwistedLandsItems.RAT_SPAWN_EGG);
         });
 
         ItemGroupEvents.modifyEntriesEvent(TWISTED_GROUP_FOOD_KEY).register(entries -> {

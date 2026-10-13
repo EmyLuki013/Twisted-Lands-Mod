@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {"top": "twisted:block/dream_world_grass_block_top", "side": "twisted:block/dream_world_grass_block_side", "bottom": "minecraft:block/dirt"}
+}

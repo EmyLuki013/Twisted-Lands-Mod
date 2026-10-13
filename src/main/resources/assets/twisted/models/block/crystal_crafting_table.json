@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {"top": "twisted:block/crystal_crafting_table_top", "side": "twisted:block/crystal_crafting_table_side", "bottom": "twisted:block/crystal_crafting_table_bottom"}
+}

@@ -5,7 +5,7 @@ import com.twistedteam.twistedlands.items.enchant.EnchantPresets;
 import com.twistedteam.twistedlands.items.tools.UltimateHammer;
 import com.twistedteam.twistedlands.world.TwistedLandsOreGen;
 import com.twistedteam.twistedlands.world.backroom.Backroom;
-import com.twistedteam.twistedlands.world.candy.CandyAntSpawner;
+import com.twistedteam.twistedlands.world.DimensionMobSpawner;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -40,7 +40,7 @@ public class TwistedLands implements ModInitializer {
 		TwistedLandsAttributes.registerAttributes();
 		TwistedLandsSpawns.initialize();
 		Backroom.initialize();
-		CandyAntSpawner.initialize();
+		DimensionMobSpawner.initialize();
 	}
 
 	public static ResourceLocation id(String path) {

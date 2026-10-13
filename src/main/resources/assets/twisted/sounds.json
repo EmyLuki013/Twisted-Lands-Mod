@@ -32,5 +32,22 @@
     "sounds": [
       "twisted:block/backroom_light"
     ]
+  },
+  "rat.ambient": {
+    "sounds": [
+      "twisted:mob/rat/ratlive"
+    ]
+  },
+  "rat.hurt": {
+    "sounds": [
+      "twisted:mob/rat/rathit"
+    ]
+  },
+  "rat.death": {
+    "sounds": [
+      "twisted:mob/rat/ratdead1",
+      "twisted:mob/rat/ratdead2",
+      "twisted:mob/rat/ratdead3"
+    ]
   }
 }

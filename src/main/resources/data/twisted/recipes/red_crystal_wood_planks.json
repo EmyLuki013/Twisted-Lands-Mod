@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["A"],
+  "key": {
+    "A": [{"item": "twisted:red_crystal_wood_log"}, {"item": "twisted:stripped_red_crystal_wood_log"}]
+  },
+  "result": {"item": "twisted:red_crystal_wood_planks", "count": 4}
+}

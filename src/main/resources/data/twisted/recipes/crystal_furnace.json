@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["###", "# #", "###"],
+  "key": {
+    "#": {"item": "twisted:kyanite"}
+  },
+  "result": {"item": "twisted:crystal_furnace", "count": 1}
+}

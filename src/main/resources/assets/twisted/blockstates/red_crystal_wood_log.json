@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": {"model": "twisted:block/red_crystal_wood_log"},
+    "axis=z": {"model": "twisted:block/red_crystal_wood_log", "x": 90},
+    "axis=x": {"model": "twisted:block/red_crystal_wood_log", "x": 90, "y": 90}
+  }
+}

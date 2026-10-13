@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {"end": "twisted:block/red_crystal_wood_log_top", "side": "twisted:block/red_crystal_wood_log_side"}
+}
