@@ -2,7 +2,7 @@ package com.twistedteam.twistedlands.world.feature;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.twistedteam.twistedlands.ModFeatures;
+import com.twistedteam.twistedlands.TwistedLandsFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
@@ -56,6 +56,6 @@ public class SpacingPlacement extends PlacementModifier {
 
     @Override
     public PlacementModifierType<?> type() {
-        return ModFeatures.SPACING;
+        return TwistedLandsFeatures.SPACING;
     }
 }

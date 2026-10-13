@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "twisted:amethyst_ore"
+  },
+  "result": "twisted:amethyst",
+  "experience": 1.4,
+  "cookingtime": 100
+}

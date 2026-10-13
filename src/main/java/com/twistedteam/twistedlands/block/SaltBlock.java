@@ -1,6 +1,6 @@
 package com.twistedteam.twistedlands.block;
 
-import com.twistedteam.twistedlands.entity.RainbowAntEntity;
+import com.twistedteam.twistedlands.entities.RainbowAntEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

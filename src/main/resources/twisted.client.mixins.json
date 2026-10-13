@@ -1,0 +1,23 @@
+{
+	"required": true,
+	"package": "com.twistedteam.twistedlands.client.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"client": [
+		"ExampleClientMixin",
+		"BackroomFogMixin",
+		"TwistedLandsLoaderMixin",
+		"ItemRendererAccessor",
+		"ItemRendererMixin",
+		"MultiPlayerGameModeMixin",
+		"MinecraftAttackMixin",
+		"GameRendererReachMixin",
+		"ItemInHandLayerMixin",
+		"ItemInHandRendererMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

@@ -1,4 +1,32 @@
 {
+  "ultimate_chainsaw": {
+    "sounds": [
+      "twisted:ultimate_chainsaw"
+    ]
+  },
+  "nastysaurus.step": {
+    "sounds": [
+      "twisted:step1",
+      "twisted:step2",
+      "twisted:step3",
+      "twisted:step4"
+    ]
+  },
+  "nastysaurus.hurt": {
+    "sounds": [
+      "twisted:hurt"
+    ]
+  },
+  "nastysaurus.roar": {
+    "sounds": [
+      "twisted:roar"
+    ]
+  },
+  "nastysaurus.ambient": {
+    "sounds": [
+      "twisted:ambient"
+    ]
+  },
   "block.backroom_light": {
     "subtitle": "subtitles.twisted.block.backroom_light",
     "sounds": [

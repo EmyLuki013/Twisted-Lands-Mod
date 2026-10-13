@@ -1,7 +1,7 @@
 package com.twistedteam.twistedlands.block;
 
-import com.twistedteam.twistedlands.ModBlocks;
-import com.twistedteam.twistedlands.ModItems;
+import com.twistedteam.twistedlands.TwistedLandsBlocks;
+import com.twistedteam.twistedlands.TwistedLandsItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -58,8 +58,8 @@ public class TomatoPlantBodyBlock extends Block implements BonemealableBlock {
         if (direction == Direction.DOWN && !canSurvive(state, level, pos)) {
             return Blocks.AIR.defaultBlockState();
         }
-        if (direction == Direction.UP && !neighbor.is(this) && !neighbor.is(ModBlocks.TOMATO_PLANT_HEAD)) {
-            return ModBlocks.TOMATO_PLANT_HEAD.defaultBlockState();
+        if (direction == Direction.UP && !neighbor.is(this) && !neighbor.is(TwistedLandsBlocks.TOMATO_PLANT_HEAD)) {
+            return TwistedLandsBlocks.TOMATO_PLANT_HEAD.defaultBlockState();
         }
         return super.updateShape(state, direction, neighbor, level, pos, neighborPos);
     }
@@ -83,7 +83,7 @@ public class TomatoPlantBodyBlock extends Block implements BonemealableBlock {
             return InteractionResult.PASS;
         }
         if (!level.isClientSide) {
-            popResource(level, pos, new ItemStack(ModItems.TOMATO, 1 + level.random.nextInt(3)));
+            popResource(level, pos, new ItemStack(TwistedLandsItems.TOMATO, 1 + level.random.nextInt(3)));
             level.setBlock(pos, state.setValue(GROWTH, 0), Block.UPDATE_CLIENTS);
             level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
         }
@@ -111,6 +111,6 @@ public class TomatoPlantBodyBlock extends Block implements BonemealableBlock {
 
     @Override
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-        return new ItemStack(ModItems.TOMATO);
+        return new ItemStack(TwistedLandsItems.TOMATO);
     }
 }

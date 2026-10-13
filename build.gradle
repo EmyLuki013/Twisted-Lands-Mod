@@ -10,24 +10,11 @@ repositories {
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
 	maven { url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
+	maven { url = "https://dl.cloudsmith.io/public/tslat/sbl/maven/" }
 }
 
 loom {
-	splitEnvironmentSourceSets()
-
-	mods {
-		"twisted" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
-		}
-	}
-}
-
-fabricApi {
-	configureDataGeneration {
-		client = true
-		modId = "twisted"
-	}
+	accessWidenerPath = file("src/main/resources/twisted.accesswidener")
 }
 
 dependencies {
@@ -41,6 +28,9 @@ dependencies {
 
 	// Modelos e animações dos mobs (lê os .geo.json e .animation.json do addon direto).
 	modImplementation "software.bernie.geckolib:geckolib-fabric-1.20.1:${project.geckolib_version}"
+
+	// IA dos mobs (sistema de brain: sensores, memórias e comportamentos).
+	modImplementation "net.tslat.smartbrainlib:SmartBrainLib-fabric-1.20.1:${project.smartbrainlib_version}"
 }
 
 processResources {

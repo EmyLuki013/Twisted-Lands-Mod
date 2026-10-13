@@ -1,6 +1,6 @@
 package com.twistedteam.twistedlands.world.backroom;
 
-import com.twistedteam.twistedlands.ModBlocks;
+import com.twistedteam.twistedlands.TwistedLandsBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Blocks;
@@ -94,13 +94,13 @@ public final class BackroomMaze {
             return Blocks.AIR.defaultBlockState();
         }
         if (!isPath(x, z)) {
-            return ModBlocks.BACKROOMS_WALLPAPER.defaultBlockState();
+            return TwistedLandsBlocks.BACKROOMS_WALLPAPER.defaultBlockState();
         }
         if (y == FLOOR_Y) {
-            return ModBlocks.WALLPAPER_PLANKS.defaultBlockState();
+            return TwistedLandsBlocks.WALLPAPER_PLANKS.defaultBlockState();
         }
         if (y == CEILING_Y) {
-            return (isLamp(x, z) ? ModBlocks.WALLPAPER_SMOOTH_LAMP : ModBlocks.WALLPAPER_SMOOTH).defaultBlockState();
+            return (isLamp(x, z) ? TwistedLandsBlocks.WALLPAPER_SMOOTH_LAMP : TwistedLandsBlocks.WALLPAPER_SMOOTH).defaultBlockState();
         }
         return Blocks.AIR.defaultBlockState();
     }

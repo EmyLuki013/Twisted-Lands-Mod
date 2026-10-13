@@ -1,6 +1,6 @@
 package com.twistedteam.twistedlands.mixin;
 
-import com.twistedteam.twistedlands.ModItems;
+import com.twistedteam.twistedlands.TwistedLandsItems;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionBrewing;
@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class PotionBrewingMixin {
     @Inject(method = "isIngredient", at = @At("HEAD"), cancellable = true)
     private static void twisted$isIngredient(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if (stack.is(ModItems.BROWN_ANT_MANDIBLE)) {
+        if (stack.is(TwistedLandsItems.BROWN_ANT_MANDIBLE)) {
             cir.setReturnValue(true);
         }
     }
@@ -43,12 +43,12 @@ public abstract class PotionBrewingMixin {
 
     @Unique
     private static ItemStack twisted$result(ItemStack potion, ItemStack ingredient) {
-        if (ingredient.is(ModItems.BROWN_ANT_MANDIBLE) && potion.is(Items.POTION)
+        if (ingredient.is(TwistedLandsItems.BROWN_ANT_MANDIBLE) && potion.is(Items.POTION)
                 && PotionUtils.getPotion(potion) == Potions.AWKWARD) {
-            return new ItemStack(ModItems.COMBAT_POTION);
+            return new ItemStack(TwistedLandsItems.COMBAT_POTION);
         }
-        if (ingredient.is(Items.GLOWSTONE_DUST) && potion.is(ModItems.COMBAT_POTION)) {
-            return new ItemStack(ModItems.POWERED_COMBAT_POTION);
+        if (ingredient.is(Items.GLOWSTONE_DUST) && potion.is(TwistedLandsItems.COMBAT_POTION)) {
+            return new ItemStack(TwistedLandsItems.POWERED_COMBAT_POTION);
         }
         return ItemStack.EMPTY;
     }

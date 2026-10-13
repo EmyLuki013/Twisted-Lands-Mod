@@ -1,8 +1,8 @@
 package com.twistedteam.twistedlands.world.candy;
 
-import com.twistedteam.twistedlands.ModBlocks;
-import com.twistedteam.twistedlands.ModEntities;
-import com.twistedteam.twistedlands.entity.CandyAntEntity;
+import com.twistedteam.twistedlands.TwistedLandsBlocks;
+import com.twistedteam.twistedlands.TwistedLandsEntities;
+import com.twistedteam.twistedlands.entities.CandyAntEntity;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
@@ -71,7 +71,7 @@ public final class CandyAntSpawner {
 
         int count = random.nextInt(3) + 2;
         for (int i = 0; i < count; i++) {
-            CandyAntEntity ant = ModEntities.CANDY_ANT.create(level);
+            CandyAntEntity ant = TwistedLandsEntities.CANDY_ANT.create(level);
             if (ant == null) {
                 return;
             }
@@ -90,7 +90,7 @@ public final class CandyAntSpawner {
                     random.nextIntBetweenInclusive(-SPREAD, SPREAD));
             for (int dy = -2; dy <= 2; dy++) {
                 BlockPos pos = column.above(dy);
-                if (level.getBlockState(pos.below()).is(ModBlocks.COOKIE_GRASS) && level.isEmptyBlock(pos)
+                if (level.getBlockState(pos.below()).is(TwistedLandsBlocks.COOKIE_GRASS) && level.isEmptyBlock(pos)
                         && level.noCollision(ant, ant.getType().getAABB(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5))
                         && level.getEntities(ant, new AABB(pos)).isEmpty()) {
                     return pos;
@@ -104,7 +104,7 @@ public final class CandyAntSpawner {
     private static BlockPos findGround(ServerLevel level, BlockPos column) {
         for (int dy = -SEARCH_Y; dy <= SEARCH_Y; dy++) {
             BlockPos ground = column.above(dy);
-            if (level.getBlockState(ground).is(ModBlocks.COOKIE_GRASS) && level.isEmptyBlock(ground.above())) {
+            if (level.getBlockState(ground).is(TwistedLandsBlocks.COOKIE_GRASS) && level.isEmptyBlock(ground.above())) {
                 return ground.above();
             }
         }

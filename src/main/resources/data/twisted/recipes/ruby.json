@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "twisted:ruby_ore"
+  },
+  "result": "twisted:ruby",
+  "experience": 1.6,
+  "cookingtime": 90
+}

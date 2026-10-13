@@ -1,6 +1,12 @@
 {
   "replace": false,
   "values": [
+    "twisted:amethyst_ore",
+    "twisted:deepslate_amethyst_ore",
+    "twisted:amethyst_block",
+    "twisted:ruby_block",
+    "twisted:ruby_ore",
+    "twisted:deepslate_ruby_ore",
     "twisted:backrooms_wallpaper",
     "twisted:wallpaper_planks",
     "twisted:wallpaper_smooth",

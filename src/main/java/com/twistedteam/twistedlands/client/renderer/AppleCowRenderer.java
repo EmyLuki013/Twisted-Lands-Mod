@@ -1,0 +1,25 @@
+package com.twistedteam.twistedlands.client.renderer;
+
+import com.twistedteam.twistedlands.TwistedLands;
+import net.minecraft.client.renderer.entity.CowRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.animal.Cow;
+
+public class AppleCowRenderer extends CowRenderer {
+
+    private static final ResourceLocation ADULT_TEXTURE =
+            new ResourceLocation(TwistedLands.MOD_ID, "textures/entity/apple_cow.png");
+
+    private static final ResourceLocation BABY_TEXTURE =
+            new ResourceLocation(TwistedLands.MOD_ID, "textures/entity/apple_cow.png");
+
+    public AppleCowRenderer(EntityRendererProvider.Context ctx) {
+        super(ctx);
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(Cow entity) {
+        return entity.isBaby() ? BABY_TEXTURE : ADULT_TEXTURE;
+    }
+}

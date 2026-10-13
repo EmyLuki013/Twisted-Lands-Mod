@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XLX",
+    "XXX"
+  ],
+  "key": {
+    "X": { "item": "twisted:ruby" },
+    "L": { "item": "twisted:amethyst_chestplate" }
+  },
+  "result": {
+    "item": "twisted:ruby_chestplate"
+  }
+}

@@ -1,7 +1,7 @@
 package com.twistedteam.twistedlands.block;
 
-import com.twistedteam.twistedlands.ModBlocks;
-import com.twistedteam.twistedlands.ModItems;
+import com.twistedteam.twistedlands.TwistedLandsBlocks;
+import com.twistedteam.twistedlands.TwistedLandsItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -41,7 +41,7 @@ public class TomatoPlantHeadBlock extends Block implements BonemealableBlock {
     }
 
     static boolean supports(BlockState below) {
-        return below.is(Blocks.GRASS_BLOCK) || below.is(ModBlocks.TOMATO_PLANT_BODY);
+        return below.is(Blocks.GRASS_BLOCK) || below.is(TwistedLandsBlocks.TOMATO_PLANT_BODY);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class TomatoPlantHeadBlock extends Block implements BonemealableBlock {
         }
         int bodies = 0;
         BlockPos below = head.below();
-        while (level.getBlockState(below).is(ModBlocks.TOMATO_PLANT_BODY)) {
+        while (level.getBlockState(below).is(TwistedLandsBlocks.TOMATO_PLANT_BODY)) {
             bodies++;
             below = below.below();
         }
@@ -77,16 +77,16 @@ public class TomatoPlantHeadBlock extends Block implements BonemealableBlock {
     /** A ponta vira caule e nasce uma ponta nova em cima. Chamar só depois de canGrowTaller. */
     static void growTaller(ServerLevel level, BlockPos pos) {
         BlockPos head = findHead(level, pos);
-        level.setBlock(head, ModBlocks.TOMATO_PLANT_BODY.defaultBlockState(), Block.UPDATE_CLIENTS);
-        level.setBlock(head.above(), ModBlocks.TOMATO_PLANT_HEAD.defaultBlockState(), Block.UPDATE_ALL);
+        level.setBlock(head, TwistedLandsBlocks.TOMATO_PLANT_BODY.defaultBlockState(), Block.UPDATE_CLIENTS);
+        level.setBlock(head.above(), TwistedLandsBlocks.TOMATO_PLANT_HEAD.defaultBlockState(), Block.UPDATE_ALL);
     }
 
     private static BlockPos findHead(LevelReader level, BlockPos pos) {
         BlockPos cursor = pos;
-        while (level.getBlockState(cursor).is(ModBlocks.TOMATO_PLANT_BODY)) {
+        while (level.getBlockState(cursor).is(TwistedLandsBlocks.TOMATO_PLANT_BODY)) {
             cursor = cursor.above();
         }
-        return level.getBlockState(cursor).is(ModBlocks.TOMATO_PLANT_HEAD) ? cursor : null;
+        return level.getBlockState(cursor).is(TwistedLandsBlocks.TOMATO_PLANT_HEAD) ? cursor : null;
     }
 
     @Override
@@ -106,6 +106,6 @@ public class TomatoPlantHeadBlock extends Block implements BonemealableBlock {
 
     @Override
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-        return new ItemStack(ModItems.TOMATO);
+        return new ItemStack(TwistedLandsItems.TOMATO);
     }
 }

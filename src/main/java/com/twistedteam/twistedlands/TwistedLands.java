@@ -1,11 +1,17 @@
 package com.twistedteam.twistedlands;
 
+import com.twistedteam.twistedlands.items.TwistedLandsItemGroups;
+import com.twistedteam.twistedlands.items.enchant.EnchantPresets;
+import com.twistedteam.twistedlands.items.tools.UltimateHammer;
+import com.twistedteam.twistedlands.world.TwistedLandsOreGen;
 import com.twistedteam.twistedlands.world.backroom.Backroom;
 import com.twistedteam.twistedlands.world.candy.CandyAntSpawner;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.animal.Cow;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,22 +19,26 @@ import org.slf4j.LoggerFactory;
 public class TwistedLands implements ModInitializer {
 	public static final String MOD_ID = "twisted";
 
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	@Override
 	public void onInitialize() {
-		FuelRegistry.INSTANCE.add(ModItems.CRYSTAL_STICK, 30 * 20);
+		FuelRegistry.INSTANCE.add(TwistedLandsItems.CRYSTAL_STICK, 30 * 20);
 
-		ModItems.initialize();
-		ModSounds.initialize();
-		ModBlocks.initialize();
-		ModFoods.initialize();
-		ModEffects.initialize();
-		ModEntities.initialize();
-		ModFeatures.initialize();
+		TwistedLandsSounds.init();
+		TwistedLandsItems.initialize();
+		UltimateHammer.registerEvents();
+		TwistedLandsBlocks.register();
+		TwistedLandsItemGroups.initialize();
+		TwistedLandsOreGen.register();
+		TwistedLandsFeatures.initialize();
+		TwistedLandsEntities.initialize();
+		TwistedLandsEffects.initialize();
+
+		EnchantPresets.registerTickHook();
+
+		TwistedLandsAttributes.registerAttributes();
+		TwistedLandsSpawns.initialize();
 		Backroom.initialize();
 		CandyAntSpawner.initialize();
 	}
