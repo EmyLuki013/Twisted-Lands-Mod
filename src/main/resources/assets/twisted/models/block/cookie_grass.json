@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "twisted:block/cookie_grass_top",
+    "side": "twisted:block/cookie_grass_side",
+    "bottom": "twisted:block/cookie_stone"
+  }
+}

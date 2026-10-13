@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["A"],
+  "key": {
+    "A": {"item": "twisted:chocolate_bar_block"}
+  },
+  "result": {"item": "twisted:chocolate_bar", "count": 9}
+}

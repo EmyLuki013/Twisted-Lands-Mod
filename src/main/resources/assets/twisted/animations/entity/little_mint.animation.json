@@ -1,0 +1,13 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.little_mint.pose": {
+			"loop": true,
+			"bones": {
+				"tuxzinho": {
+					"position": [0, -8, 0]
+				}
+			}
+		}
+	}
+}

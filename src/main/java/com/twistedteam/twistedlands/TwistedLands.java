@@ -1,6 +1,7 @@
 package com.twistedteam.twistedlands;
 
 import com.twistedteam.twistedlands.world.backroom.Backroom;
+import com.twistedteam.twistedlands.world.candy.CandyAntSpawner;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.registry.FuelRegistry;
@@ -24,7 +25,12 @@ public class TwistedLands implements ModInitializer {
 		ModItems.initialize();
 		ModSounds.initialize();
 		ModBlocks.initialize();
+		ModFoods.initialize();
+		ModEffects.initialize();
+		ModEntities.initialize();
+		ModFeatures.initialize();
 		Backroom.initialize();
+		CandyAntSpawner.initialize();
 	}
 
 	public static ResourceLocation id(String path) {

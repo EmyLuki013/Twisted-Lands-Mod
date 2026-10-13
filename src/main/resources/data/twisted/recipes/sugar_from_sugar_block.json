@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["A"],
+  "key": {
+    "A": {"item": "twisted:sugar_block"}
+  },
+  "result": {"item": "minecraft:sugar", "count": 9}
+}

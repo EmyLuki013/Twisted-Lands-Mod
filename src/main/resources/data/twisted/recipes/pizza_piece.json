@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["T", "C", "B"],
+  "key": {
+    "B": {"item": "minecraft:bread"},
+    "T": {"item": "twisted:tomato"},
+    "C": {"item": "twisted:cheese"}
+  },
+  "result": {"item": "twisted:pizza_piece", "count": 1}
+}

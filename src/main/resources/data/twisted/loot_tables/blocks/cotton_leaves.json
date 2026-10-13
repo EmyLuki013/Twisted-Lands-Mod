@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "twisted:cotton_candy",
+          "weight": 50
+        },
+        {"type": "minecraft:empty", "weight": 50}
+      ]
+    },
+    {
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "conditions": [
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {"items": ["minecraft:shears"]}
+        }
+      ],
+      "entries": [
+        {"type": "minecraft:item", "name": "twisted:cotton_leaves"}
+      ]
+    }
+  ],
+  "random_sequence": "twisted:blocks/cotton_leaves"
+}

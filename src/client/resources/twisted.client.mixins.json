@@ -4,7 +4,9 @@
 	"compatibilityLevel": "JAVA_17",
 	"client": [
 		"BackroomFogMixin",
-		"ExampleClientMixin"
+		"ExampleClientMixin",
+		"ItemInHandLayerMixin",
+		"ItemInHandRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

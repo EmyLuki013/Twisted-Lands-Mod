@@ -1,6 +1,7 @@
 package com.twistedteam.twistedlands.world.backroom;
 
 import com.twistedteam.twistedlands.TwistedLands;
+import com.twistedteam.twistedlands.world.ReturnPoints;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -44,6 +45,7 @@ public final class Backroom {
     private static final float BED_CHANCE = 0.0001f;
     private static final long MORNING_END = 5000;
     private static final BlockPos SPAWN = new BlockPos(8, BackroomMaze.FLOOR_Y + 1, 8);
+    private static final String RETURNS = "twisted_backroom_returns";
 
     private record Task(long tick, Runnable action) {
     }
@@ -81,7 +83,8 @@ public final class Backroom {
         if (backroom == null || player.level().dimension() == LEVEL) {
             return;
         }
-        BackroomReturns.get(player.server).put(player.getUUID(), GlobalPos.of(player.level().dimension(), player.blockPosition()));
+        ReturnPoints.get(player.server, RETURNS).put(player.getUUID(),
+                new ReturnPoints.Point(GlobalPos.of(player.level().dimension(), player.blockPosition())));
         BlockPos spot = BackroomMaze.nearestCorridor(SPAWN.getX(), SPAWN.getZ());
         player.teleportTo(backroom, spot.getX() + 0.5, spot.getY(), spot.getZ() + 0.5, player.getYRot(), player.getXRot());
     }
@@ -92,10 +95,10 @@ public final class Backroom {
      */
     public static void leave(ServerPlayer player) {
         MinecraftServer server = player.server;
-        GlobalPos back = BackroomReturns.get(server).take(player.getUUID());
-        ServerLevel level = back != null ? server.getLevel(back.dimension()) : null;
+        ReturnPoints.Point back = ReturnPoints.get(server, RETURNS).take(player.getUUID());
+        ServerLevel level = back != null ? server.getLevel(back.pos().dimension()) : null;
         if (level != null) {
-            BlockPos pos = back.pos();
+            BlockPos pos = back.pos().pos();
             player.teleportTo(level, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, player.getYRot(), player.getXRot());
             return;
         }

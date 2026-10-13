@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["BCB", "ADA", "A A"],
+  "key": {
+    "A": {"item": "twisted:rainbow_ant_leg"},
+    "B": {"item": "twisted:rainbow_ant_fang"},
+    "C": {"item": "twisted:rainbow_ant_eye"},
+    "D": {"item": "twisted:rainbow_ant_abdomen"}
+  },
+  "result": {"item": "twisted:dead_rainbow_ant", "count": 1}
+}

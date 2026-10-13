@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["AAA", "AAA", "AAA"],
+  "key": {
+    "A": {"item": "minecraft:cookie"}
+  },
+  "result": {"item": "twisted:cookie_stone", "count": 1}
+}

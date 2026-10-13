@@ -1,0 +1,11 @@
+{
+  "type": "twisted:template",
+  "config": {
+    "templates": ["twisted:candy_lands/candy_house"],
+    "rotate": true,
+    "y_offset": -1,
+    "max_slope": 2,
+    "clear": "#twisted:candy_lands_clear",
+    "free": ["twisted:cookie_grass", "twisted:cookie_stone", "minecraft:dirt", "minecraft:gravel"]
+  }
+}

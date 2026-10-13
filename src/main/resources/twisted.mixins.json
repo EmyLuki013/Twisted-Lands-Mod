@@ -3,7 +3,10 @@
 	"package": "com.twistedteam.twistedlands.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ExampleMixin"
+		"BrewingPotionSlotMixin",
+		"BrewingStandBlockEntityMixin",
+		"ExampleMixin",
+		"PotionBrewingMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

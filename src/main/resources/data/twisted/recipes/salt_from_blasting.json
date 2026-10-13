@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "ingredient": {"item": "twisted:salt_ore"},
+  "result": "twisted:salt",
+  "experience": 0.1,
+  "cookingtime": 100
+}

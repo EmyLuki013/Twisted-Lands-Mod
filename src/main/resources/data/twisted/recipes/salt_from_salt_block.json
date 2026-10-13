@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["A"],
+  "key": {
+    "A": {"item": "twisted:salt_block"}
+  },
+  "result": {"item": "twisted:salt", "count": 9}
+}

@@ -1,0 +1,10 @@
+{
+  "type": "twisted:template",
+  "config": {
+    "templates": ["twisted:candy_lands/candy_cane1", "twisted:candy_lands/candy_cane2", "twisted:candy_lands/candy_cane3", "twisted:candy_lands/choco_bar1", "twisted:candy_lands/choco_bar2", "twisted:candy_lands/cotton_candy1", "twisted:candy_lands/cotton_candy2", "twisted:candy_lands/cotton_candy3"],
+    "rotate": false,
+    "y_offset": 0,
+    "max_slope": -1,
+    "free": ["twisted:cotton_leaves", "twisted:cookie_grass", "twisted:cookie_stone", "minecraft:dirt", "minecraft:gravel"]
+  }
+}

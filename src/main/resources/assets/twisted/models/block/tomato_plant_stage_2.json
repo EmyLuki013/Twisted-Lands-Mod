@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {"cross": "twisted:block/tomato_plant_stage_2"}
+}

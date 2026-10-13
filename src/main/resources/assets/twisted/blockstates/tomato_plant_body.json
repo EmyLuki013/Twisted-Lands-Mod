@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "growth=0": {"model": "twisted:block/tomato_plant_stage_2"},
+    "growth=1": {"model": "twisted:block/tomato_plant_stage_3"},
+    "growth=2": {"model": "twisted:block/tomato_plant_stage_4"}
+  }
+}

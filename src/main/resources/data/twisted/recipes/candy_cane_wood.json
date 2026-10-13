@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["##", "##"],
+  "key": {
+    "#": {"item": "twisted:candy_cane_log"}
+  },
+  "result": {"item": "twisted:candy_cane_wood", "count": 3}
+}

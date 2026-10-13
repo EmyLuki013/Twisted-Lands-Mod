@@ -1,0 +1,42 @@
+{
+  "has_precipitation": true,
+  "temperature": 0.8,
+  "downfall": 0.4,
+  "effects": {
+    "fog_color": 16417276,
+    "sky_color": 7907327,
+    "water_color": 4159204,
+    "water_fog_color": 329011,
+    "mood_sound": {
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2.0
+    }
+  },
+  "spawners": {
+    "monster": [],
+    "creature": [],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {},
+  "carvers": {"air": ["twisted:candy_lands/canyon"]},
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    ["twisted:candy_lands/big_cake", "twisted:candy_lands/candy_house"],
+    [],
+    [],
+    [],
+    [],
+    ["twisted:candy_lands/cotton_candy_tree", "twisted:candy_lands/deco"],
+    []
+  ]
+}

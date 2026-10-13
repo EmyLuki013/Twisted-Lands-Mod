@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "facing=up": {"model": "twisted:block/extreme_torch"},
+    "facing=north": {"model": "twisted:block/extreme_torch_wall"},
+    "facing=east": {"model": "twisted:block/extreme_torch_wall", "y": 90},
+    "facing=south": {"model": "twisted:block/extreme_torch_wall", "y": 180},
+    "facing=west": {"model": "twisted:block/extreme_torch_wall", "y": 270}
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "variants": {
+    "axis=y": {"model": "twisted:block/candy_cane_wood"},
+    "axis=z": {
+      "model": "twisted:block/candy_cane_wood_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "twisted:block/candy_cane_wood_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

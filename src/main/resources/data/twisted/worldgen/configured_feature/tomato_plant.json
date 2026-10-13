@@ -1,0 +1,4 @@
+{
+  "type": "twisted:template",
+  "config": {"templates": ["twisted:tomato_plant"]}
+}

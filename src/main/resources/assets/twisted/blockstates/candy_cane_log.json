@@ -1,0 +1,14 @@
+{
+  "variants": {
+    "axis=y": {"model": "twisted:block/candy_cane_log"},
+    "axis=z": {
+      "model": "twisted:block/candy_cane_log_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "twisted:block/candy_cane_log_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

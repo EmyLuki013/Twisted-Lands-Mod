@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["WAW", "WSW", "WBW"],
+  "key": {
+    "W": {"item": "minecraft:wheat"},
+    "A": {"item": "minecraft:apple"},
+    "S": {"item": "minecraft:sugar"},
+    "B": {"item": "minecraft:bowl"}
+  },
+  "result": {"item": "twisted:apple_pie", "count": 1}
+}

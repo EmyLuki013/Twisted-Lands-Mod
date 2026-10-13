@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["B", "A", "A"],
+  "key": {
+    "A": {"item": "minecraft:stick"},
+    "B": {"item": "minecraft:coal"}
+  },
+  "result": {"item": "twisted:extreme_torch", "count": 1}
+}

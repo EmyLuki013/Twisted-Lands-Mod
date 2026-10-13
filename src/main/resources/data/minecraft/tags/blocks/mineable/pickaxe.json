@@ -16,6 +16,11 @@
     "twisted:wallpaper_tiled_dark_lamp",
     "twisted:wallpaper_tiled_lamp",
     "twisted:uncrystal_wood_pillar",
-    "twisted:wallpaper_corner"
+    "twisted:wallpaper_corner",
+    "twisted:cookie_stone",
+    "twisted:chocolate_bar_block",
+    "twisted:sugar_block",
+    "twisted:salt_ore",
+    "twisted:salt_block"
   ]
 }
