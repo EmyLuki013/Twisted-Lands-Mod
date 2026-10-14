@@ -1,5 +1,12 @@
 package com.twistedteam.twistedlands.client;
 
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.client.resources.sounds.EntityBoundSoundInstance;
+import net.minecraft.client.Minecraft;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import com.twistedteam.twistedlands.TwistedLandsSounds;
+import com.twistedteam.twistedlands.entities.RainbowPortalEntity;
 import com.twistedteam.twistedlands.entities.BalloonSharkEntity;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -86,6 +93,19 @@ public class TwistedLandsClient implements ClientModInitializer {
 			@Override
 			public ResourceLocation getTextureLocation(IrukandjiArrowEntity arrow) {
 				return TEXTURE;
+			}
+		});
+		EntityRendererRegistry.register(TwistedLandsEntities.RAINBOW_PORTAL, RainbowPortalRenderer::new);
+		ParticleFactoryRegistry.getInstance().register(TwistedLandsEntities.RAINBOW_SPARKS, RainbowSparksParticle.Provider::new);
+		// O som ambiente do portal tem 23.5s, o mesmo tempo do loop do addon. Preso ao portal, para quando ele some.
+		ClientEntityEvents.ENTITY_LOAD.register((entity, level) -> {
+			if (entity instanceof RainbowPortalEntity) {
+				Minecraft.getInstance().getSoundManager().play(new EntityBoundSoundInstance(
+						TwistedLandsSounds.PORTAL_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.0f, entity, level.random.nextLong()) {
+					{
+						looping = true;
+					}
+				});
 			}
 		});
 		// A skin sai do variant: cloud, cloud_glow, unskinned e emoji.

@@ -1,5 +1,6 @@
 package com.twistedteam.twistedlands.world.backroom;
 
+import com.twistedteam.twistedlands.world.dream.DreamWorld;
 import com.twistedteam.twistedlands.TwistedLands;
 import com.twistedteam.twistedlands.world.ReturnPoints;
 import com.twistedteam.twistedlands.world.dream.DreamWorldChunkGenerator;
@@ -158,6 +159,13 @@ public final class Backroom {
         if (level.dimension() == LEVEL && level.getBlockState(hit.getBlockPos()).is(Blocks.BAMBOO_DOOR)) {
             if (player instanceof ServerPlayer serverPlayer) {
                 leave(serverPlayer);
+            }
+            return InteractionResult.SUCCESS;
+        }
+        // No labirinto do Dream World a porta sai pelo Rainbow Portal, sem pedir a armadura (igual ao player.js).
+        if (level.dimension() == DreamWorldChunkGenerator.LEVEL && level.getBlockState(hit.getBlockPos()).is(Blocks.BAMBOO_DOOR)) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                DreamWorld.leave(serverPlayer);
             }
             return InteractionResult.SUCCESS;
         }

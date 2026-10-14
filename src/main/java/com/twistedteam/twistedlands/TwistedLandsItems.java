@@ -1,5 +1,10 @@
 package com.twistedteam.twistedlands;
 
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.BlockPos;
+import com.twistedteam.twistedlands.entities.RainbowPortalEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -451,6 +456,29 @@ public class TwistedLandsItems {
             new SpawnEggItem(TwistedLandsEntities.BALLOON_SHARK, 0xFFFFFF, 0xFFFFFF, new FabricItemSettings()),
             "balloon_shark_spawn_egg");
     public static final Item SHARK_FIN = register(new Item(new FabricItemSettings()), "shark_fin");
+    // entity_placer do addon: põe o portal no bloco clicado, como um spawn egg.
+    public static final Item RAINBOW_PORTAL = register(new Item(new FabricItemSettings().maxCount(1)) {
+        @Override
+        public InteractionResult useOn(UseOnContext context) {
+            if (!(context.getLevel() instanceof ServerLevel level)) {
+                return InteractionResult.SUCCESS;
+            }
+            BlockPos pos = context.getClickedPos();
+            if (!level.getBlockState(pos).getCollisionShape(level, pos).isEmpty()) {
+                pos = pos.relative(context.getClickedFace());
+            }
+            RainbowPortalEntity portal = TwistedLandsEntities.RAINBOW_PORTAL.create(level);
+            if (portal == null) {
+                return InteractionResult.FAIL;
+            }
+            portal.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.0f, 0.0f);
+            level.addFreshEntity(portal);
+            if (context.getPlayer() == null || !context.getPlayer().getAbilities().instabuild) {
+                context.getItemInHand().shrink(1);
+            }
+            return InteractionResult.CONSUME;
+        }
+    }, "rainbow_portal");
     public static final List<Item> DREAM_WORLD = new ArrayList<>(List.of(CRYSTAL_COAL, PEACOCK_FEATHER, DEAD_IRUKANDJI,
             IRUKANDJI_ARROW, SHARK_FIN));
 

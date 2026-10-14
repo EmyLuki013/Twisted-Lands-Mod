@@ -57,8 +57,7 @@ public final class CrystalMaterials {
                 shaped(recipes, id, "equipment", id, 1, patterns[i], 'A', tier.repair, 'B', "crystal_stick");
             }
         }
-        // O addon não tem receita da armadura de olho de tigre.
-        for (Armor material : new Armor[] {Armor.PINK_TOURMALINE, Armor.JADE}) {
+        for (Armor material : Armor.values()) {
             String[][] patterns = {{"###", "# #"}, {"# #", "###", "###"}, {"###", "# #", "# #"}, {"# #", "# #"}};
             for (ArmorItem.Type type : ArmorItem.Type.values()) {
                 String id = material.prefix + "_" + type.getName();

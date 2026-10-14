@@ -1,5 +1,7 @@
 package com.twistedteam.twistedlands;
 
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import com.twistedteam.twistedlands.entities.*;
 import com.twistedteam.twistedlands.projectiles.IrukandjiArrowEntity;
 import com.twistedteam.twistedlands.projectiles.ThrownAxeEntity;
@@ -82,6 +84,18 @@ public class TwistedLandsEntities {
                     .dimensions(EntityDimensions.scalable(1.0f, 1.0f))
                     .defaultAttributes(BalloonSharkEntity::createAttributes)
                     .build());
+
+    // Sem collision_box no addon: o padrão do Bedrock (1 x 1) vezes o scale 3.5. Só serve pra bater nele.
+    public static final EntityType<RainbowPortalEntity> RAINBOW_PORTAL = Registry.register(BuiltInRegistries.ENTITY_TYPE,
+            TwistedLands.id("rainbow_portal"),
+            EntityType.Builder.<RainbowPortalEntity>of(RainbowPortalEntity::new, MobCategory.MISC)
+                    .sized(3.5f, 3.5f)
+                    .fireImmune()
+                    .clientTrackingRange(10)
+                    .updateInterval(Integer.MAX_VALUE)
+                    .build("rainbow_portal"));
+    public static final SimpleParticleType RAINBOW_SPARKS = Registry.register(BuiltInRegistries.PARTICLE_TYPE,
+            TwistedLands.id("rainbow_sparks"), FabricParticleTypes.simple());
 
     public static final EntityType<MobjiraEntity> MOBJIRA =
             Registry.register(BuiltInRegistries.ENTITY_TYPE,

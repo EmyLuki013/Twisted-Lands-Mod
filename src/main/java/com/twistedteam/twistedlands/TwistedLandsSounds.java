@@ -26,6 +26,10 @@ public class TwistedLandsSounds {
     public static final SoundEvent PEACOCK_HURT = register("peacock.hurt");
     public static final SoundEvent PEACOCK_DEATH = register("peacock.death");
 
+    public static final SoundEvent PORTAL_AMBIENT = register("dimension.portal_ambient");
+    public static final SoundEvent PORTAL_KICK = register("dimension.portal_kick");
+    public static final SoundEvent DREAM_TRAVEL = register("dimension.dream_travel");
+
     private static SoundEvent register(String name) {
         ResourceLocation id = new ResourceLocation(TwistedLands.MOD_ID, name);
         return Registry.register(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));

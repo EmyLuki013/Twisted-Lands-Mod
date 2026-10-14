@@ -135,6 +135,7 @@ public class TwistedLandsItemGroups {
             entries.accept(TwistedLandsItems.WATER_BLASTER);
             entries.accept(TwistedLandsItems.MANTIS_CLAW);
             entries.accept(TwistedLandsItems.LASER_CHARGE);
+            entries.accept(TwistedLandsItems.RAINBOW_PORTAL);
             TwistedLandsItems.DREAM_WORLD.stream()
                     .filter(item -> item instanceof TieredItem || item instanceof ArmorItem)
                     .forEach(entries::accept);

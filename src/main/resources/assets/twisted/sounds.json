@@ -66,5 +66,20 @@
     "sounds": [
       "twisted:mob/ostrich/death"
     ]
+  },
+  "dimension.portal_ambient": {
+    "sounds": [
+      "twisted:dimension/portal_ambient"
+    ]
+  },
+  "dimension.portal_kick": {
+    "sounds": [
+      "twisted:dimension/portal_kick"
+    ]
+  },
+  "dimension.dream_travel": {
+    "sounds": [
+      "twisted:dimension/dream_travel"
+    ]
   }
 }
