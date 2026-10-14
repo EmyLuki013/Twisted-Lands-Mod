@@ -97,7 +97,11 @@ public class DreamWorldChunkGenerator extends ChunkGenerator {
      * Uma coluna: y do bloco de cima da planície, se é água, de que é o enchimento, quais das 48 camadas de ilha
      * são kyanita (um bit por camada) e o y da kyanita mais alta (-1 sem ilha).
      */
-    private record Column(int ground, boolean water, BlockState fill, long islands, int islandTop) {
+    private record Column(int ground, int waterDepth, BlockState fill, long islands, int islandTop) {
+        boolean water() {
+            return waterDepth > 0;
+        }
+
         int top() {
             return islandTop >= 0 ? islandTop + 1 : ground;
         }
@@ -147,10 +151,16 @@ public class DreamWorldChunkGenerator extends ChunkGenerator {
         // por isso toda a água fica no mesmo nível, o chão da planície.
         long islands = islands(noises.islands(), x, z);
         int islandTop = islands == 0 ? -1 : ISLAND_MIN_Y + 63 - Long.numberOfLeadingZeros(islands);
-        if (fbm(noises.water(), x * 0.004, z * 0.004) < -0.25) {
-            return new Column(BASE_Y, true, SAND, islands, islandTop);
+        // O addon calcula a profundidade (4 no lago, 1 a 3 no rio) mas só põe uma camada de água. Aqui ela é
+        // usada, senão nenhum lago tem fundo pro irukandji (1.5 de altura) ficar dentro d'água.
+        double water = fbm(noises.water(), x * 0.004, z * 0.004);
+        if (water < -0.5) {
+            return new Column(BASE_Y, 4, SAND, islands, islandTop);
         }
-        return new Column(BASE_Y + height, false, height >= 4 ? STONE : DIRT, islands, islandTop);
+        if (water < -0.25) {
+            return new Column(BASE_Y, (int) Math.floor((water + 0.25) / -0.25 * 3) + 1, SAND, islands, islandTop);
+        }
+        return new Column(BASE_Y + height, 0, height >= 4 ? STONE : DIRT, islands, islandTop);
     }
 
     // A conta das features islands e islands_edge do addon. O query.noise do Bedrock é Perlin, como o ImprovedNoise.
@@ -200,7 +210,10 @@ public class DreamWorldChunkGenerator extends ChunkGenerator {
             float stoneChance = y == BEDROCK_Y + 1 ? 52 / 256f : 69 / 256f;
             return noises.random().at(x, y, z).nextFloat() < stoneChance ? STONE : BEDROCK;
         }
-        if (column.water() && y == BASE_Y - 1) {
+        if (column.water() && y > column.ground() - column.waterDepth()) {
+            return WATER;
+        }
+        if (column.water() && y == column.ground() - column.waterDepth()) {
             return column.fill();
         }
         if (y < BASE_Y + 2) {

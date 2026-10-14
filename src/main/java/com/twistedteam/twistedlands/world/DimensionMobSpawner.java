@@ -18,6 +18,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
@@ -68,7 +69,8 @@ public final class DimensionMobSpawner {
     }
 
     private static void tick(MinecraftServer server) {
-        if (server.getTickCount() % INTERVAL != 0) {
+        // Respeita o /gamerule doMobSpawning, igual ao spawn natural do Java.
+        if (server.getTickCount() % INTERVAL != 0 || !server.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING)) {
             return;
         }
         for (ServerLevel level : server.getAllLevels()) {

@@ -1,6 +1,7 @@
 package com.twistedteam.twistedlands.entities;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -88,6 +89,10 @@ public class IrukandjiEntity extends WaterAnimal implements GeoEntity, SmartBrai
         return level.getFluidState(pos).isSource() && level.getFluidState(pos.below()).isSource();
     }
 
+    private static boolean isDeepWater(LevelAccessor level, BlockPos pos) {
+        return level.getFluidState(pos).is(FluidTags.WATER) && level.getFluidState(pos.above()).is(FluidTags.WATER);
+    }
+
     @Override
     protected PathNavigation createNavigation(Level level) {
         return new WaterBoundPathNavigation(this, level);
@@ -131,9 +136,11 @@ public class IrukandjiEntity extends WaterAnimal implements GeoEntity, SmartBrai
                         new TargetOrRetaliate<IrukandjiEntity>()
                                 .useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
                                 .attackablePredicate(this::isValidTarget),
-                        // random_swim até 30 blocos de lado e 15 de altura; swim_idle de 5s com 5% de chance.
+                        // random_swim até 30 blocos de lado e 15 de altura; swim_idle de 5s com 5% de chance. Só vai
+                        // pra água com 2 de fundo: ele tem 1.5 de altura e no raso ficava com metade do corpo pra fora.
                         new OneRandomBehaviour<IrukandjiEntity>(
-                                Pair.of(new SetRandomSwimTarget<IrukandjiEntity>().setRadius(30, 15), 19),
+                                Pair.of(new SetRandomSwimTarget<IrukandjiEntity>().setRadius(30, 15)
+                                        .swimTargetPredicate((irukandji, pos) -> pos != null && isDeepWater(irukandji.level(), BlockPos.containing(pos))), 19),
                                 Pair.of(new Idle<IrukandjiEntity>().runFor(irukandji -> 100), 1))));
     }
 
@@ -197,11 +204,15 @@ public class IrukandjiEntity extends WaterAnimal implements GeoEntity, SmartBrai
         return 0;
     }
 
-    // Igual ao golfinho, sem afundar parado (can_sink false no addon).
+    // Igual ao golfinho, sem afundar parado (can_sink false no addon). O alvo do random_swim pode cair acima da
+    // água; sem o empurrão pra baixo ele subia até a superfície e ficava boiando com o corpo todo pra fora.
     @Override
     public void travel(Vec3 input) {
         if (isControlledByLocalInstance() && isInWater()) {
             moveRelative(getSpeed(), input);
+            if (!isUnderWater()) {
+                setDeltaMovement(getDeltaMovement().x, Math.min(getDeltaMovement().y, 0.0) - 0.02, getDeltaMovement().z);
+            }
             move(MoverType.SELF, getDeltaMovement());
             setDeltaMovement(getDeltaMovement().scale(0.9));
         } else {
