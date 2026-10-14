@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BCB",
+    "CAC",
+    "BCB"
+  ],
+  "key": {
+    "A": {
+      "item": "twisted:miners_dream"
+    },
+    "B": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "C": {
+      "item": "twisted:ultimate_ingot"
+    }
+  },
+  "result": {
+    "item": "twisted:super_miners_dream"
+  }
+}

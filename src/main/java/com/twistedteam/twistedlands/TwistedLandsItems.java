@@ -1,5 +1,7 @@
 package com.twistedteam.twistedlands;
 
+import com.twistedteam.twistedlands.items.extras.CritterCageItem;
+import com.twistedteam.twistedlands.items.extras.MinersDreamItem;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.server.level.ServerLevel;
@@ -456,6 +458,24 @@ public class TwistedLandsItems {
             new SpawnEggItem(TwistedLandsEntities.BALLOON_SHARK, 0xFFFFFF, 0xFFFFFF, new FabricItemSettings()),
             "balloon_shark_spawn_egg");
     public static final Item SHARK_FIN = register(new Item(new FabricItemSettings()), "shark_fin");
+
+    public static final Item MINERS_DREAM = register(
+            new MinersDreamItem(new FabricItemSettings().maxCount(64), false), "miners_dream");
+    public static final Item SUPER_MINERS_DREAM = register(
+            new MinersDreamItem(new FabricItemSettings().maxDamage(100), true), "super_miners_dream");
+
+    // As cheias empilham 1 e só saem da vazia.
+    public static final Item CRITTER_CAGE_EMPTY = register(
+            new CritterCageItem(new FabricItemSettings(), () -> TwistedLandsItems.CRITTER_CAGE_FILLED, false), "critter_cage_empty");
+    public static final Item CRITTER_CAGE_FILLED = register(
+            new CritterCageItem(new FabricItemSettings().maxCount(1), () -> CRITTER_CAGE_EMPTY, true), "critter_cage_filled");
+    public static final Item CRYSTAL_CRITTER_CAGE_EMPTY = register(
+            new CritterCageItem(new FabricItemSettings(), () -> TwistedLandsItems.CRYSTAL_CRITTER_CAGE_FILLED, false),
+            "crystal_critter_cage_empty");
+    public static final Item CRYSTAL_CRITTER_CAGE_FILLED = register(
+            new CritterCageItem(new FabricItemSettings().maxCount(1), () -> CRYSTAL_CRITTER_CAGE_EMPTY, true),
+            "crystal_critter_cage_filled");
+
     // entity_placer do addon: põe o portal no bloco clicado, como um spawn egg.
     public static final Item RAINBOW_PORTAL = register(new Item(new FabricItemSettings().maxCount(1)) {
         @Override

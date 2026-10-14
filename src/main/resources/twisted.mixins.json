@@ -10,7 +10,8 @@
 		"BrewingStandBlockEntityMixin",
 		"PotionBrewingMixin",
 		"LootDataManagerMixin",
-		"RecipeManagerMixin"
+		"RecipeManagerMixin",
+		"TransientCraftingContainerAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1

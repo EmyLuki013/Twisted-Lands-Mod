@@ -136,6 +136,10 @@ public class TwistedLandsItemGroups {
             entries.accept(TwistedLandsItems.MANTIS_CLAW);
             entries.accept(TwistedLandsItems.LASER_CHARGE);
             entries.accept(TwistedLandsItems.RAINBOW_PORTAL);
+            entries.accept(TwistedLandsItems.MINERS_DREAM);
+            entries.accept(TwistedLandsItems.SUPER_MINERS_DREAM);
+            entries.accept(TwistedLandsItems.CRITTER_CAGE_EMPTY);
+            entries.accept(TwistedLandsItems.CRYSTAL_CRITTER_CAGE_EMPTY);
             entries.accept(TwistedLandsBlocks.DREAM_BED);
             TwistedLandsItems.DREAM_WORLD.stream()
                     .filter(item -> item instanceof TieredItem || item instanceof ArmorItem)

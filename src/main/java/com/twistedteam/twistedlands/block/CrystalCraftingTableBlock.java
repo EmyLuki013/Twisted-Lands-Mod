@@ -1,13 +1,21 @@
 package com.twistedteam.twistedlands.block;
 
+import com.google.gson.JsonObject;
+import com.twistedteam.twistedlands.TwistedLandsBlocks;
+import com.twistedteam.twistedlands.mixin.TransientCraftingContainerAccessor;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.CraftingMenu;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -51,6 +59,42 @@ public class CrystalCraftingTableBlock extends CraftingTableBlock {
         @Override
         public boolean stillValid(Player player) {
             return stillValid(access, player, block);
+        }
+    }
+
+    /** Receita com a tag "crystal" só no addon: igual à shaped vanilla, mas só fecha no grid desta mesa. */
+    public static class Recipe extends ShapedRecipe {
+        Recipe(ShapedRecipe recipe) {
+            super(recipe.getId(), recipe.getGroup(), recipe.category(), recipe.getWidth(), recipe.getHeight(),
+                    recipe.getIngredients(), recipe.getResultItem(null), recipe.showNotification());
+        }
+
+        @Override
+        public boolean matches(CraftingContainer container, Level level) {
+            return container instanceof TransientCraftingContainerAccessor grid && grid.twisted$getMenu() instanceof Menu
+                    && super.matches(container, level);
+        }
+
+        @Override
+        public RecipeSerializer<?> getSerializer() {
+            return TwistedLandsBlocks.CRYSTAL_SHAPED_SERIALIZER;
+        }
+    }
+
+    public static class Serializer implements RecipeSerializer<Recipe> {
+        @Override
+        public Recipe fromJson(ResourceLocation id, JsonObject json) {
+            return new Recipe(RecipeSerializer.SHAPED_RECIPE.fromJson(id, json));
+        }
+
+        @Override
+        public Recipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+            return new Recipe(RecipeSerializer.SHAPED_RECIPE.fromNetwork(id, buf));
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, Recipe recipe) {
+            RecipeSerializer.SHAPED_RECIPE.toNetwork(buf, recipe);
         }
     }
 }

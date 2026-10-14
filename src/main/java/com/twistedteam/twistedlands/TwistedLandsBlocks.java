@@ -378,6 +378,9 @@ public class TwistedLandsBlocks {
             BuiltInRegistries.RECIPE_SERIALIZER, TwistedLands.id("crystal_smelting"),
             new SimpleCookingSerializer<>(CrystalFurnaceBlock.Smelting::new, 133));
 
+    public static final RecipeSerializer<CrystalCraftingTableBlock.Recipe> CRYSTAL_SHAPED_SERIALIZER = Registry.register(
+            BuiltInRegistries.RECIPE_SERIALIZER, TwistedLands.id("crystal_shaped"), new CrystalCraftingTableBlock.Serializer());
+
     // Mais baixa que a Sacred Torch e sem os blocos de luz. Fogo na altura do addon (0.8).
     public static final Block CRYSTAL_TORCH = register(
             new ExtremeTorchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).instabreak().sound(SoundType.WOOD)

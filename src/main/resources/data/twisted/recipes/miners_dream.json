@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "AAA",
+    "BBB",
+    "CCC"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:cactus"
+    },
+    "B": {
+      "item": "minecraft:redstone_block"
+    },
+    "C": {
+      "item": "minecraft:gunpowder"
+    }
+  },
+  "result": {
+    "item": "twisted:miners_dream"
+  }
+}

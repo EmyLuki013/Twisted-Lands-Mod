@@ -39,7 +39,7 @@ public final class CrystalMaterials {
                 '#', "crystal_wood_planks|red_crystal_wood_planks");
         shaped(recipes, "crystal_furnace", "misc", "crystal_furnace", 1, new String[] {"###", "# #", "###"},
                 '#', "kyanite");
-        shaped(recipes, "tiger_eye_ingot", "misc", "tiger_eye_ingot", 1, new String[] {"SSS", "S##", "## "},
+        crystalShaped(recipes, "tiger_eye_ingot", "misc", "tiger_eye_ingot", 1, new String[] {"SSS", "S##", "## "},
                 'S', "tiger_eye_scrap", '#', "pink_tourmaline_ingot");
 
         storage(recipes, "crystal_coal", "crystal_coal_block");
@@ -54,14 +54,14 @@ public final class CrystalMaterials {
             String[] tools = {"sword", "pickaxe", "axe", "shovel", "hoe"};
             for (int i = 0; i < tools.length; i++) {
                 String id = tier.prefix + "_" + tools[i];
-                shaped(recipes, id, "equipment", id, 1, patterns[i], 'A', tier.repair, 'B', "crystal_stick");
+                crystalShaped(recipes, id, "equipment", id, 1, patterns[i], 'A', tier.repair, 'B', "crystal_stick");
             }
         }
         for (Armor material : Armor.values()) {
             String[][] patterns = {{"###", "# #"}, {"# #", "###", "###"}, {"###", "# #", "# #"}, {"# #", "# #"}};
             for (ArmorItem.Type type : ArmorItem.Type.values()) {
                 String id = material.prefix + "_" + type.getName();
-                shaped(recipes, id, "equipment", id, 1, patterns[type.ordinal()], '#', material.repair);
+                crystalShaped(recipes, id, "equipment", id, 1, patterns[type.ordinal()], '#', material.repair);
             }
         }
 
@@ -74,24 +74,37 @@ public final class CrystalMaterials {
 
         shaped(recipes, "dream_bed", "misc", "dream_bed", 1, new String[] {"#", "B"},
                 '#', "dead_rainbow_ant", 'B', "#minecraft:beds");
-        shaped(recipes, "irukandji_arrow", "equipment", "irukandji_arrow", 6, new String[] {"D", "S", "P"},
+        crystalShaped(recipes, "irukandji_arrow", "equipment", "irukandji_arrow", 6, new String[] {"D", "S", "P"},
                 'D', "dead_irukandji", 'S', "crystal_stick", 'P', "peacock_feather");
+        shaped(recipes, "crystal_critter_cage_empty", "equipment", "crystal_critter_cage_empty", 1,
+                new String[] {"#S#", "S S", "#S#"}, '#', "pink_tourmaline_ingot", 'S', "crystal_stick");
         shaped(recipes, "peacock_feather_boots", "equipment", "peacock_feather_boots", 1, new String[] {"##", "##"},
                 '#', "peacock_feather");
         shaped(recipes, "emerald_peacock", "misc", "emerald_peacock", 1, new String[] {"###", "#A#", "###"},
                 '#', "minecraft:emerald", 'A', "peacock_cooked");
     }
 
-    // 9 itens viram o bloco e o bloco volta a ser 9 itens.
+    // 9 itens viram o bloco (só na Crystal Crafting Table) e o bloco volta a ser 9 itens (nas duas mesas).
     private static void storage(Map<ResourceLocation, JsonElement> recipes, String item, String block) {
-        shaped(recipes, block + "_from_" + item, "building", block, 1, new String[] {"###", "###", "###"}, '#', item);
+        crystalShaped(recipes, block + "_from_" + item, "building", block, 1, new String[] {"###", "###", "###"}, '#', item);
         shaped(recipes, item + "_from_" + block, "misc", item, 9, new String[] {"#"}, '#', block);
     }
 
     private static void shaped(Map<ResourceLocation, JsonElement> recipes, String id, String category, String result,
                                int count, String[] pattern, Object... key) {
+        shapedOfType(recipes, "minecraft:crafting_shaped", id, category, result, count, pattern, key);
+    }
+
+    // Receitas que no addon só têm a tag "crystal": não saem na crafting table vanilla nem no inventário.
+    private static void crystalShaped(Map<ResourceLocation, JsonElement> recipes, String id, String category, String result,
+                                      int count, String[] pattern, Object... key) {
+        shapedOfType(recipes, "twisted:crystal_shaped", id, category, result, count, pattern, key);
+    }
+
+    private static void shapedOfType(Map<ResourceLocation, JsonElement> recipes, String type, String id, String category,
+                                     String result, int count, String[] pattern, Object... key) {
         JsonObject json = new JsonObject();
-        json.addProperty("type", "minecraft:crafting_shaped");
+        json.addProperty("type", type);
         json.addProperty("category", category);
         JsonArray rows = new JsonArray();
         for (String row : pattern) rows.add(row);
