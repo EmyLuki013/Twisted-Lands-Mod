@@ -1,0 +1,12 @@
+{
+  "structures": [
+    { "structure": "twisted:dream_house", "weight": 1 },
+    { "structure": "twisted:windmill", "weight": 1 }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 8,
+    "separation": 5,
+    "salt": 482917305
+  }
+}

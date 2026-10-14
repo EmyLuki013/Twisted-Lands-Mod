@@ -1,0 +1,21 @@
+{
+  "feature": {
+    "type": "twisted:template",
+    "config": {
+      "templates": ["twisted:dream_world/crystal_dungeon"],
+      "rotate": true,
+      "y_offset": -1,
+      "max_slope": 1,
+      "free": ["twisted:crystal_grass"]
+    }
+  },
+  "placement": [
+    { "type": "minecraft:in_square" },
+    { "type": "minecraft:heightmap", "heightmap": "WORLD_SURFACE_WG" },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": { "type": "minecraft:matching_blocks", "offset": [0, -1, 0], "blocks": "twisted:crystal_grass" }
+    },
+    { "type": "minecraft:biome" }
+  ]
+}

@@ -31,7 +31,9 @@
     [],
     [],
     [],
-    [],
+    [
+      "twisted:dream_crystal_dungeon"
+    ],
     [],
     [
       "twisted:dream_crystal_coal_ore",

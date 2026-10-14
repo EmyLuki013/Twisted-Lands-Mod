@@ -1,0 +1,9 @@
+{
+  "type": "twisted:ground",
+  "biomes": "twisted:dream_world",
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none",
+  "template": "twisted:dream_world/windmill",
+  "max_slope": 2
+}

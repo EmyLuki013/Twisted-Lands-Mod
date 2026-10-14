@@ -226,11 +226,13 @@ public class DreamWorldChunkGenerator extends ChunkGenerator {
         return CompletableFuture.completedFuture(chunk);
     }
 
+    // Altura do chão, sem as ilhas. As estruturas (casa e moinho) começam por aqui e ficam no chão como no addon.
+    // As features usam o heightmap real da chunk, que tem as ilhas.
     @Override
     public int getBaseHeight(int x, int z, Heightmap.Types type, LevelHeightAccessor level, RandomState randomState) {
         Noises noises = noises(randomState);
         Column column = column(noises, x, z);
-        for (int y = column.top(); y >= BEDROCK_Y; y--) {
+        for (int y = column.ground(); y >= BEDROCK_Y; y--) {
             if (type.isOpaque().test(stateAt(noises, column, x, y, z))) {
                 return y + 1;
             }
