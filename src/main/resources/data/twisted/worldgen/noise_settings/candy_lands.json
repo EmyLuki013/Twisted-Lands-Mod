@@ -10,8 +10,8 @@
     "Properties": {"level": "0"}
   },
   "noise": {
-    "min_y": 32,
-    "height": 224,
+    "min_y": 0,
+    "height": 256,
     "size_horizontal": 1,
     "size_vertical": 2
   },
@@ -127,8 +127,8 @@
         "if_true": {
           "type": "minecraft:vertical_gradient",
           "random_name": "twisted:candy_lands_bedrock_floor",
-          "true_at_and_below": {"absolute": 32},
-          "false_at_and_above": {"absolute": 36}
+          "true_at_and_below": {"absolute": 0},
+          "false_at_and_above": {"absolute": 4}
         },
         "then_run": {
           "type": "minecraft:block",

@@ -8,7 +8,7 @@
       "max_inclusive": {"absolute": 60}
     },
     "yScale": 3.0,
-    "lava_level": {"above_bottom": 8},
+    "lava_level": {"absolute": 40},
     "replaceable": "#twisted:candy_lands_carver_replaceables",
     "vertical_rotation": {
       "type": "minecraft:uniform",

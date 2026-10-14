@@ -1,10 +1,16 @@
 package com.twistedteam.twistedlands.world.backroom;
 
+import com.twistedteam.twistedlands.TwistedLands;
 import com.twistedteam.twistedlands.TwistedLandsBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
@@ -90,16 +96,21 @@ public final class BackroomMaze {
 
     /** Bloco numa posição do mundo. Fora da faixa chão..teto é tudo ar. */
     public static BlockState stateAt(int x, int y, int z) {
-        if (y < FLOOR_Y || y > CEILING_Y) {
+        return stateAt(x, y, z, FLOOR_Y);
+    }
+
+    /** O mesmo labirinto com o chão em outra altura. O Dream World tem uma camada dele embaixo do chão. */
+    public static BlockState stateAt(int x, int y, int z, int floorY) {
+        if (y < floorY || y > floorY + CEILING_Y - FLOOR_Y) {
             return Blocks.AIR.defaultBlockState();
         }
         if (!isPath(x, z)) {
             return TwistedLandsBlocks.BACKROOMS_WALLPAPER.defaultBlockState();
         }
-        if (y == FLOOR_Y) {
+        if (y == floorY) {
             return TwistedLandsBlocks.WALLPAPER_PLANKS.defaultBlockState();
         }
-        if (y == CEILING_Y) {
+        if (y == floorY + CEILING_Y - FLOOR_Y) {
             return (isLamp(x, z) ? TwistedLandsBlocks.WALLPAPER_SMOOTH_LAMP : TwistedLandsBlocks.WALLPAPER_SMOOTH).defaultBlockState();
         }
         return Blocks.AIR.defaultBlockState();
@@ -111,15 +122,29 @@ public final class BackroomMaze {
      * ficavam de cara pra parede. Esse filtro também deixa as saídas umas 2,5x mais raras.
      */
     @Nullable
-    public static BlockPos exitIn(ChunkPos chunk) {
+    public static BlockPos exitIn(ChunkPos chunk, int floorY) {
         for (int z = chunk.getMinBlockZ(); z <= chunk.getMaxBlockZ(); z++) {
             for (int x = chunk.getMinBlockX(); x <= chunk.getMaxBlockX(); x++) {
                 if (isCellCenter(x, z) && (hash(x, z) % 1000) / 1000.0 < EXIT_CHANCE && allDoorsOpen(x, z)) {
-                    return new BlockPos(x, FLOOR_Y, z);
+                    return new BlockPos(x, floorY, z);
                 }
             }
         }
         return null;
+    }
+
+    /**
+     * Coloca a saída deste chunk, se tiver. Roda no applyBiomeDecoration: colocar estrutura precisa de um
+     * WorldGenLevel, e ela pode passar pro chunk vizinho (nesta etapa os vizinhos já estão gerados).
+     */
+    public static void placeExit(WorldGenLevel level, ChunkAccess chunk, int floorY) {
+        BlockPos exit = exitIn(chunk.getPos(), floorY);
+        MinecraftServer server = level.getServer();
+        if (exit == null || server == null) {
+            return;
+        }
+        server.getStructureManager().get(TwistedLands.id("backroom_exit")).ifPresent(template ->
+                template.placeInWorld(level, exit, exit, new StructurePlaceSettings(), level.getRandom(), Block.UPDATE_CLIENTS));
     }
 
     // A backroom_exit é 5x5 com uma porta no meio de cada lado. Na frente de cada porta a estrutura não tem bloco,

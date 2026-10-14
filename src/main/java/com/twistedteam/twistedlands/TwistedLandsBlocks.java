@@ -124,7 +124,7 @@ public class TwistedLandsBlocks {
     );
 
     public static final Block WALLPAPER_PLANKS = register(
-            new Block(backroom()),
+            new WallpaperPlanksBlock(backroom()),
             "wallpaper_planks"
     );
 

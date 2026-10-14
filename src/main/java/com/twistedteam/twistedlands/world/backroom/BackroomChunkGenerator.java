@@ -2,9 +2,7 @@ package com.twistedteam.twistedlands.world.backroom;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.twistedteam.twistedlands.TwistedLands;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
@@ -12,7 +10,6 @@ import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.BiomeSource;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -21,7 +18,6 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.blending.Blender;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -85,17 +81,7 @@ public class BackroomChunkGenerator extends ChunkGenerator {
     @Override
     public void applyBiomeDecoration(WorldGenLevel level, ChunkAccess chunk, StructureManager structureManager) {
         super.applyBiomeDecoration(level, chunk, structureManager);
-
-        // A saída entra aqui e não no fillFromNoise: colocar estrutura precisa de um WorldGenLevel,
-        // e ela pode passar pro chunk vizinho (nesta etapa os vizinhos já estão gerados).
-
-        BlockPos exit = BackroomMaze.exitIn(chunk.getPos());
-        MinecraftServer server = level.getServer();
-        if (exit == null || server == null) {
-            return;
-        }
-        server.getStructureManager().get(TwistedLands.id("backroom_exit")).ifPresent(template ->
-                template.placeInWorld(level, exit, exit, new StructurePlaceSettings(), level.getRandom(), Block.UPDATE_CLIENTS));
+        BackroomMaze.placeExit(level, chunk, BackroomMaze.FLOOR_Y);
     }
 
     @Override

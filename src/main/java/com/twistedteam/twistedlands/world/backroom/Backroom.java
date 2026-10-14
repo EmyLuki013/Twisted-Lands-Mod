@@ -2,6 +2,7 @@ package com.twistedteam.twistedlands.world.backroom;
 
 import com.twistedteam.twistedlands.TwistedLands;
 import com.twistedteam.twistedlands.world.ReturnPoints;
+import com.twistedteam.twistedlands.world.dream.DreamWorldChunkGenerator;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -37,7 +38,8 @@ import java.util.Optional;
 
 /**
  * Regras da Backroom: o easter egg da cama que te joga lá dentro, as portas de bambu que te tiram,
- * e a proteção que no Bedrock era feita com blocos deny/allow (fora do criativo não quebra nem coloca bloco).
+ * e a proteção que no Bedrock era feita com blocos deny/allow (fora do criativo não quebra nem coloca bloco),
+ * que vale também pra camada do labirinto embaixo do Dream World.
  */
 public final class Backroom {
     public static final ResourceKey<Level> LEVEL = ResourceKey.create(Registries.DIMENSION, TwistedLands.id("backroom"));
@@ -72,7 +74,7 @@ public final class Backroom {
         UseBlockCallback.EVENT.register(Backroom::onUseBlock);
         // Cancelar o ataque no bloco (nos dois lados) impede começar a quebrar, sem bloco sumindo e voltando.
         AttackBlockCallback.EVENT.register((player, level, hand, pos, direction) ->
-                isLocked(player, level) ? InteractionResult.FAIL : InteractionResult.PASS);
+                isLocked(player, level, pos) ? InteractionResult.FAIL : InteractionResult.PASS);
         ServerTickEvents.END_SERVER_TICK.register(Backroom::runTasks);
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> TASKS.clear());
     }
@@ -150,23 +152,34 @@ public final class Backroom {
     // Roda no cliente e no servidor. O cliente devolve SUCCESS pra porta não abrir,
     // e quem teleporta de fato é o servidor.
     private static InteractionResult onUseBlock(Player player, Level level, InteractionHand hand, BlockHitResult hit) {
-        if (level.dimension() != LEVEL || player.isSpectator()) {
+        if (player.isSpectator()) {
             return InteractionResult.PASS;
         }
-        if (level.getBlockState(hit.getBlockPos()).is(Blocks.BAMBOO_DOOR)) {
+        if (level.dimension() == LEVEL && level.getBlockState(hit.getBlockPos()).is(Blocks.BAMBOO_DOOR)) {
             if (player instanceof ServerPlayer serverPlayer) {
                 leave(serverPlayer);
             }
             return InteractionResult.SUCCESS;
         }
-        if (isLocked(player, level) && player.getItemInHand(hand).getItem() instanceof BlockItem) {
+        // O bloco vai no lado clicado, ou no próprio bloco clicado quando ele é substituível (grama, neve).
+        BlockPos target = hit.getBlockPos().relative(hit.getDirection());
+        if ((isLocked(player, level, target) || isLocked(player, level, hit.getBlockPos()))
+                && player.getItemInHand(hand).getItem() instanceof BlockItem) {
             return InteractionResult.FAIL;
         }
         return InteractionResult.PASS;
     }
 
-    private static boolean isLocked(Player player, Level level) {
-        return level.dimension() == LEVEL && !player.getAbilities().instabuild;
+    // A Backroom inteira, e no Dream World só a camada do labirinto (chão ao teto).
+    private static boolean isLocked(Player player, Level level, BlockPos pos) {
+        if (player.getAbilities().instabuild) {
+            return false;
+        }
+        if (level.dimension() == DreamWorldChunkGenerator.LEVEL) {
+            int floor = DreamWorldChunkGenerator.MAZE_FLOOR_Y;
+            return pos.getY() >= floor && pos.getY() <= floor + BackroomMaze.CEILING_Y - BackroomMaze.FLOOR_Y;
+        }
+        return level.dimension() == LEVEL;
     }
 
     private static void schedule(MinecraftServer server, int delay, Runnable action) {
