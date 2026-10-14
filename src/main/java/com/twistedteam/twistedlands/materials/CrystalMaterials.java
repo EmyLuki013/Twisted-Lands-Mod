@@ -72,6 +72,8 @@ public final class CrystalMaterials {
         smelting(recipes, "peacock_raw", "peacock_cooked");
         cooking(recipes, "peacock_raw", "peacock_cooked");
 
+        shaped(recipes, "dream_bed", "misc", "dream_bed", 1, new String[] {"#", "B"},
+                '#', "dead_rainbow_ant", 'B', "#minecraft:beds");
         shaped(recipes, "irukandji_arrow", "equipment", "irukandji_arrow", 6, new String[] {"D", "S", "P"},
                 'D', "dead_irukandji", 'S', "crystal_stick", 'P', "peacock_feather");
         shaped(recipes, "peacock_feather_boots", "equipment", "peacock_feather_boots", 1, new String[] {"##", "##"},
@@ -133,9 +135,14 @@ public final class CrystalMaterials {
         }
     }
 
+    // "#namespace:tag" vira ingrediente de tag.
     private static JsonObject item(String id) {
         JsonObject json = new JsonObject();
-        json.addProperty("item", qualify(id));
+        if (id.startsWith("#")) {
+            json.addProperty("tag", id.substring(1));
+        } else {
+            json.addProperty("item", qualify(id));
+        }
         return json;
     }
 

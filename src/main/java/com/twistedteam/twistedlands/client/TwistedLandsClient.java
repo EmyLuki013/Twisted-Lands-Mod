@@ -148,6 +148,7 @@ public class TwistedLandsClient implements ClientModInitializer {
 				TwistedLandsBlocks.PIZZA, TwistedLandsBlocks.EXTREME_TORCH, TwistedLandsBlocks.TOMATO_PLANT_HEAD, TwistedLandsBlocks.TOMATO_PLANT_BODY,
 				TwistedLandsBlocks.SALT_DUST, TwistedLandsBlocks.CRYSTAL_CORN_PLANT_HEAD, TwistedLandsBlocks.CRYSTAL_CORN_PLANT_BODY);
 		BlockRenderLayerMap.INSTANCE.putBlock(TwistedLandsBlocks.COTTON_LEAVES, RenderType.cutoutMipped());
+		BlockRenderLayerMap.INSTANCE.putBlock(TwistedLandsBlocks.DREAM_BED, RenderType.cutout());
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.translucent(), TwistedLandsBlocks.KYANITE, TwistedLandsBlocks.CRYSTAL_GRASS,
 				TwistedLandsBlocks.CRYSTAL_WOOD_LOG, TwistedLandsBlocks.STRIPPED_CRYSTAL_WOOD_LOG, TwistedLandsBlocks.RED_CRYSTAL_WOOD_LOG,
 				TwistedLandsBlocks.STRIPPED_RED_CRYSTAL_WOOD_LOG, TwistedLandsBlocks.CRYSTAL_WOOD_PLANKS, TwistedLandsBlocks.RED_CRYSTAL_WOOD_PLANKS,

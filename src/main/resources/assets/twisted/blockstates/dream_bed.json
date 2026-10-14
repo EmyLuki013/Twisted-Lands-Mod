@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=south": {
+      "model": "twisted:block/dream_bed"
+    },
+    "facing=west": {
+      "model": "twisted:block/dream_bed",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "twisted:block/dream_bed",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "twisted:block/dream_bed",
+      "y": 270
+    }
+  }
+}

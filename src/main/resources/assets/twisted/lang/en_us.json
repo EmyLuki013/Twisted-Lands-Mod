@@ -94,6 +94,8 @@
   "entity.twisted.little_mint": "Little Mint",
   "item.twisted.rainbow_ant_spawn_egg": "Rainbow Ant Spawn Egg",
   "entity.twisted.rat": "Rat",
+  "block.twisted.dream_bed": "Dream Bed",
+  "dreamBed.cantSleep": "§cYou can only sleep at morning§r",
   "entity.twisted.rainbow_portal": "Rainbow Portal",
   "item.twisted.rainbow_portal": "§l§cR§6a§ei§an§5b§9o§dw §5P§ao§er§ct§aa§ll§r",
   "rainbow_portal.exit_needs": "§4You needs full Tiger Eye armor to exit!§r",

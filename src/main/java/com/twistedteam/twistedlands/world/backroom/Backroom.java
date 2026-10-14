@@ -1,5 +1,6 @@
 package com.twistedteam.twistedlands.world.backroom;
 
+import net.minecraft.world.level.block.BedBlock;
 import com.twistedteam.twistedlands.world.dream.DreamWorld;
 import com.twistedteam.twistedlands.TwistedLands;
 import com.twistedteam.twistedlands.world.ReturnPoints;
@@ -62,8 +63,9 @@ public final class Backroom {
     public static void initialize() {
         Registry.register(BuiltInRegistries.CHUNK_GENERATOR, TwistedLands.id("backroom"), BackroomChunkGenerator.CODEC);
 
+        // Só a cama vanilla (a Dream Bed tem a viagem dela).
         EntitySleepEvents.STOP_SLEEPING.register((entity, sleepingPos) -> {
-            if (entity instanceof ServerPlayer player) {
+            if (entity instanceof ServerPlayer player && entity.level().getBlockState(sleepingPos).getBlock() instanceof BedBlock) {
                 onWakeUp(player);
             }
         });
@@ -190,7 +192,8 @@ public final class Backroom {
         return level.dimension() == LEVEL;
     }
 
-    private static void schedule(MinecraftServer server, int delay, Runnable action) {
+    /** Roda action daqui a delay ticks do servidor. */
+    public static void schedule(MinecraftServer server, int delay, Runnable action) {
         TASKS.add(new Task(server.getTickCount() + delay, action));
     }
 

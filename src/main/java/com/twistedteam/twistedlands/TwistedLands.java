@@ -1,5 +1,6 @@
 package com.twistedteam.twistedlands;
 
+import com.twistedteam.twistedlands.block.DreamBedBlock;
 import com.twistedteam.twistedlands.items.TwistedLandsItemGroups;
 import com.twistedteam.twistedlands.items.enchant.EnchantPresets;
 import com.twistedteam.twistedlands.items.tools.UltimateHammer;
@@ -41,6 +42,7 @@ public class TwistedLands implements ModInitializer {
 		TwistedLandsAttributes.registerAttributes();
 		TwistedLandsSpawns.initialize();
 		Backroom.initialize();
+		DreamBedBlock.registerSleepEvents();
 		DreamWorldChunkGenerator.register();
 		DimensionMobSpawner.initialize();
 	}

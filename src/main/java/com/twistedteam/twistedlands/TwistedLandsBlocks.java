@@ -1,5 +1,6 @@
 package com.twistedteam.twistedlands;
 
+import com.twistedteam.twistedlands.block.DreamBedBlock;
 import com.twistedteam.twistedlands.block.*;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -454,12 +455,19 @@ public class TwistedLandsBlocks {
             "crystal_corn_plant_body"
     );
 
+    // 0.2s pra quebrar, resistência 0.2 e som de madeira, como no addon. O item empilha 1.
+    public static final Block DREAM_BED = register(
+            new DreamBedBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(0.2f).sound(SoundType.WOOD)
+                    .noOcclusion().pushReaction(PushReaction.DESTROY)),
+            "dream_bed", new FabricItemSettings().maxCount(1)
+    );
+
     // Blocos que só dropam eles mesmos. A tabela de loot é criada no LootDataManagerMixin, sem JSON.
     public static final List<Block> SELF_DROPS = List.of(KYANITE, DREAM_STONE, CRYSTAL_WOOD_LOG, STRIPPED_CRYSTAL_WOOD_LOG,
             RED_CRYSTAL_WOOD_LOG, STRIPPED_RED_CRYSTAL_WOOD_LOG, CRYSTAL_WOOD_PLANKS, RED_CRYSTAL_WOOD_PLANKS,
             CRYSTAL_MUSHROOM_STEM, PURPLE_CRYSTAL_FLOWER, RED_CRYSTAL_FLOWER, CRYSTAL_CRAFTING_TABLE, CRYSTAL_FURNACE,
             CRYSTAL_TORCH, CRYSTAL_COAL_BLOCK, JADE_BLOCK, JADE_BRICKS, PINK_TOURMALINE_BLOCK, PINK_TOURMALINE_BRICKS,
-            TIGERS_EYE_BLOCK);
+            TIGERS_EYE_BLOCK, DREAM_BED);
 
     // Minérios da Dream World e o item que dropam (com fortuna e toque de seda, como os do vanilla).
     public static final Map<Block, String> ORE_DROPS = Map.of(CRYSTAL_COAL_ORE, "crystal_coal", JADE_ORE, "raw_jade",
