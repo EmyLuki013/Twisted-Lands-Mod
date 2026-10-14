@@ -49,5 +49,22 @@
       "twisted:mob/rat/ratdead2",
       "twisted:mob/rat/ratdead3"
     ]
+  },
+  "peacock.ambient": {
+    "sounds": [
+      "twisted:mob/ostrich/ambient1",
+      "twisted:mob/ostrich/ambient2",
+      "twisted:mob/ostrich/ambient3"
+    ]
+  },
+  "peacock.hurt": {
+    "sounds": [
+      "twisted:mob/ostrich/hurt"
+    ]
+  },
+  "peacock.death": {
+    "sounds": [
+      "twisted:mob/ostrich/death"
+    ]
   }
 }

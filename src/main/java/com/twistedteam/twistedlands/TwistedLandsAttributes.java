@@ -10,6 +10,8 @@ public class TwistedLandsAttributes {
         FabricDefaultAttributeRegistry.register(TwistedLandsEntities.APPLE_COW, Cow.createAttributes());
         FabricDefaultAttributeRegistry.register(TwistedLandsEntities.GOLDEN_APPLE_COW, Cow.createAttributes());
         FabricDefaultAttributeRegistry.register(TwistedLandsEntities.ENCHANTED_GOLDEN_APPLE_COW, Cow.createAttributes());
+        // Vida 10 e velocidade 0.25 no addon, os mesmos números da vaca do Bedrock. A do Java equivale a isso.
+        FabricDefaultAttributeRegistry.register(TwistedLandsEntities.CRYSTAL_APPLE_COW, Cow.createAttributes());
         FabricDefaultAttributeRegistry.register(TwistedLandsEntities.MANTIS, MantisEntity.createMantisAttributes());
         FabricDefaultAttributeRegistry.register(TwistedLandsEntities.MOBJIRA, MobjiraEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(TwistedLandsEntities.NASTYSAURUS, NastysaurusEntity.createNastysaurosAttributes());

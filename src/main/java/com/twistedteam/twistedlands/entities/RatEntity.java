@@ -17,6 +17,7 @@ import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
@@ -120,7 +121,9 @@ public class RatEntity extends PathfinderMob implements GeoEntity, SmartBrainOwn
     public BrainActivityGroup<? extends RatEntity> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
                 new FirstApplicableBehaviour<RatEntity>(
-                        new TargetOrRetaliate<RatEntity>().useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER),
+                        new TargetOrRetaliate<RatEntity>()
+                                .useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
+                                .attackablePredicate(this::isValidTarget),
                         // look_at_player: 2% de chance por tick, jogador a até 6 blocos, olha por 2 a 4s.
                         new SetPlayerLookTarget<RatEntity>()
                                 .lookPredicate((rat, player) -> rat.distanceToSqr(player) <= 36.0 && rat.getSensing().hasLineOfSight(player))
@@ -141,6 +144,21 @@ public class RatEntity extends PathfinderMob implements GeoEntity, SmartBrainOwn
                 new AnimatableMeleeAttack<RatEntity>(0))
                 // Sem isso ele continua olhando pro último alvo depois da luta.
                 .wipeMemoriesWhenFinished(MemoryModuleType.LOOK_TARGET);
+    }
+
+    // Jogador fora do criativo ou quem bateu nele. Sem isso o TargetOrRetaliate, sem jogador por perto, ataca
+    // qualquer mob que estiver vendo.
+    private boolean isValidTarget(LivingEntity target) {
+        if (!target.isAlive()) return false;
+        if (target instanceof Player player) return !player.getAbilities().instabuild;
+        return target == BrainUtils.getMemory(this, MemoryModuleType.HURT_BY_ENTITY);
+    }
+
+    // O InvalidateAttackTarget do SmartBrainLib só limpa a memória. O alvo vem dela, senão o getTarget fica
+    // apontando pro alvo antigo.
+    @Override
+    public LivingEntity getTarget() {
+        return BrainUtils.getTargetOfEntity(this);
     }
 
     private static int lookTime(RandomSource random) {

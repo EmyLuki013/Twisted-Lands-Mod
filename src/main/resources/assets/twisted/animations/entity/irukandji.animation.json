@@ -1,0 +1,54 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.irukandji.idle": {
+			"loop": true,
+			"animation_length": 0.7083,
+			"bones": {
+				"leg1": {
+					"rotation": ["-math.cos(query.life_time*200)*-5", "-math.cos(query.life_time*230)*-5", "math.cos(query.life_time*220)*-5"]
+				},
+				"leg0part3": {
+					"rotation": ["-math.sin(query.life_time*200)*-5", "-math.sin(query.life_time*230)*-5", "math.sin(query.life_time*220)*-5"]
+				},
+				"leg0part4": {
+					"rotation": ["-math.sin(query.life_time*200)*-5", "-math.sin(query.life_time*230)*-5", "math.sin(query.life_time*220)*-5"]
+				},
+				"leg2": {
+					"rotation": ["-math.cos(query.life_time*200)*5", "-math.cos(query.life_time*230)*5", "math.cos(query.life_time*220)*5"]
+				},
+				"leg0part2": {
+					"rotation": ["-math.sin(query.life_time*200)*5", "-math.sin(query.life_time*230)*5", "math.sin(query.life_time*220)*5"]
+				},
+				"leg0part5": {
+					"rotation": ["-math.sin(query.life_time*200)*5", "-math.sin(query.life_time*230)*5", "math.sin(query.life_time*220)*5"]
+				},
+				"leg3": {
+					"rotation": ["-math.cos(query.life_time*200)*-5", "-math.cos(query.life_time*230)*-5", "math.cos(query.life_time*220)*-5"]
+				},
+				"leg0part6": {
+					"rotation": ["-math.sin(query.life_time*200)*-5", "-math.sin(query.life_time*230)*-5", "math.sin(query.life_time*220)*-5"]
+				},
+				"leg0part7": {
+					"rotation": ["-math.sin(query.life_time*200)*-5", "-math.sin(query.life_time*230)*-5", "math.sin(query.life_time*220)*-5"]
+				},
+				"leg4": {
+					"rotation": ["-math.cos(query.life_time*200)*5", "-math.cos(query.life_time*230)*5", "math.cos(query.life_time*220)*5"]
+				},
+				"leg0part8": {
+					"rotation": ["-math.sin(query.life_time*200)*5", "-math.sin(query.life_time*230)*5", "math.sin(query.life_time*220)*5"]
+				},
+				"leg0part9": {
+					"rotation": ["-math.sin(query.life_time*200)*5", "-math.sin(query.life_time*230)*5", "math.sin(query.life_time*220)*5"]
+				},
+				"Head": {
+					"scale": "1.2+math.cos(query.anim_time*80)*0.2"
+				},
+				"body": {
+					"rotation": [105.0002, -0.0004, 176.5213],
+					"position": [0, 3, 0]
+				}
+			}
+		}
+	}
+}

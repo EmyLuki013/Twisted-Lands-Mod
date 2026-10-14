@@ -70,6 +70,15 @@ public final class CrystalMaterials {
         smelting(recipes, "raw_pink_tourmaline", "pink_tourmaline_ingot");
         smelting(recipes, "tigers_eye_debris", "tiger_eye_scrap");
         smelting(recipes, "minecraft:beef", "minecraft:cooked_beef");
+        smelting(recipes, "peacock_raw", "peacock_cooked");
+        cooking(recipes, "peacock_raw", "peacock_cooked");
+
+        shaped(recipes, "irukandji_arrow", "equipment", "irukandji_arrow", 6, new String[] {"D", "S", "P"},
+                'D', "dead_irukandji", 'S', "crystal_stick", 'P', "peacock_feather");
+        shaped(recipes, "peacock_feather_boots", "equipment", "peacock_feather_boots", 1, new String[] {"##", "##"},
+                '#', "peacock_feather");
+        shaped(recipes, "emerald_peacock", "misc", "emerald_peacock", 1, new String[] {"###", "#A#", "###"},
+                '#', "minecraft:emerald", 'A', "peacock_cooked");
     }
 
     // 9 itens viram o bloco e o bloco volta a ser 9 itens.
@@ -108,6 +117,21 @@ public final class CrystalMaterials {
         json.addProperty("experience", 0.7f);
         json.addProperty("cookingtime", 133);
         recipes.putIfAbsent(TwistedLands.id("crystal_furnace/" + new ResourceLocation(qualify(result)).getPath()), json);
+    }
+
+    // Fornalha, defumador e fogueira, com os tempos e o XP do frango.
+    private static void cooking(Map<ResourceLocation, JsonElement> recipes, String input, String result) {
+        String[][] types = {{"smelting", "200"}, {"smoking", "100"}, {"campfire_cooking", "600"}};
+        for (String[] type : types) {
+            JsonObject json = new JsonObject();
+            json.addProperty("type", "minecraft:" + type[0]);
+            json.addProperty("category", "food");
+            json.add("ingredient", item(input));
+            json.addProperty("result", qualify(result));
+            json.addProperty("experience", 0.35f);
+            json.addProperty("cookingtime", Integer.parseInt(type[1]));
+            recipes.putIfAbsent(TwistedLands.id(result + "_from_" + type[0]), json);
+        }
     }
 
     private static JsonObject item(String id) {

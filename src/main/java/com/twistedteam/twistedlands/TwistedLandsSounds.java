@@ -21,6 +21,11 @@ public class TwistedLandsSounds {
     public static final SoundEvent RAT_HURT = register("rat.hurt");
     public static final SoundEvent RAT_DEATH = register("rat.death");
 
+    // No addon o pavão usa os sons do avestruz.
+    public static final SoundEvent PEACOCK_AMBIENT = register("peacock.ambient");
+    public static final SoundEvent PEACOCK_HURT = register("peacock.hurt");
+    public static final SoundEvent PEACOCK_DEATH = register("peacock.death");
+
     private static SoundEvent register(String name) {
         ResourceLocation id = new ResourceLocation(TwistedLands.MOD_ID, name);
         return Registry.register(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));

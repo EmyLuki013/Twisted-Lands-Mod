@@ -237,6 +237,10 @@ public class TwistedLandsItemGroups {
             entries.accept(TwistedLandsItems.NASTYSAURUS_SPAWN_EGG);
             entries.accept(TwistedLandsItems.RAINBOW_ANT_SPAWN_EGG);
             entries.accept(TwistedLandsItems.RAT_SPAWN_EGG);
+            entries.accept(TwistedLandsItems.CRYSTAL_APPLE_COW_SPAWN_EGG);
+            entries.accept(TwistedLandsItems.PEACOCK_SPAWN_EGG);
+            entries.accept(TwistedLandsItems.IRUKANDJI_SPAWN_EGG);
+            entries.accept(TwistedLandsItems.BALLOON_SHARK_SPAWN_EGG);
         });
 
         ItemGroupEvents.modifyEntriesEvent(TWISTED_GROUP_FOOD_KEY).register(entries -> {
@@ -255,6 +259,10 @@ public class TwistedLandsItemGroups {
             entries.accept(TwistedLandsItems.SALT);
             entries.accept(TwistedLandsItems.CRYSTAL_APPLE);
             entries.accept(TwistedLandsItems.CRYSTAL_CORN);
+            entries.accept(TwistedLandsItems.PEACOCK_RAW);
+            entries.accept(TwistedLandsItems.PEACOCK_COOKED);
+            entries.accept(TwistedLandsItems.ROTTEN_PEACOCK);
+            entries.accept(TwistedLandsItems.EMERALD_PEACOCK);
         });
     }
 }

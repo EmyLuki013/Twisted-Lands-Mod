@@ -4,6 +4,7 @@ import com.twistedteam.twistedlands.TwistedLandsBlocks;
 import com.twistedteam.twistedlands.TwistedLandsEntities;
 import com.twistedteam.twistedlands.world.backroom.Backroom;
 import com.twistedteam.twistedlands.world.candy.CandyLands;
+import com.twistedteam.twistedlands.world.dream.DreamWorldChunkGenerator;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
@@ -11,13 +12,16 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
@@ -54,7 +58,12 @@ public final class DimensionMobSpawner {
     public static void initialize() {
         entries = List.of(
                 new Entry(CandyLands.LEVEL, TwistedLandsEntities.CANDY_ANT, 1.0f, 3, TwistedLandsBlocks.COOKIE_GRASS),
-                new Entry(Backroom.LEVEL, TwistedLandsEntities.RAT, 0.65f, 2, TwistedLandsBlocks.WALLPAPER_PLANKS));
+                new Entry(Backroom.LEVEL, TwistedLandsEntities.RAT, 0.65f, 2, TwistedLandsBlocks.WALLPAPER_PLANKS),
+                new Entry(DreamWorldChunkGenerator.LEVEL, TwistedLandsEntities.CRYSTAL_APPLE_COW, 0.7f, 3, TwistedLandsBlocks.CRYSTAL_GRASS),
+                new Entry(DreamWorldChunkGenerator.LEVEL, TwistedLandsEntities.PEACOCK, 0.4f, 1, TwistedLandsBlocks.CRYSTAL_GRASS),
+                new Entry(DreamWorldChunkGenerator.LEVEL, TwistedLandsEntities.IRUKANDJI, 0.5f, 1, Blocks.WATER),
+                new Entry(DreamWorldChunkGenerator.LEVEL, TwistedLandsEntities.BALLOON_SHARK, 0.6f, 2, TwistedLandsBlocks.DREAM_WORLD_GRASS_BLOCK),
+                new Entry(DreamWorldChunkGenerator.LEVEL, TwistedLandsEntities.RAT, 0.65f, 2, TwistedLandsBlocks.WALLPAPER_PLANKS));
         ServerTickEvents.END_SERVER_TICK.register(DimensionMobSpawner::tick);
     }
 
@@ -77,6 +86,10 @@ public final class DimensionMobSpawner {
 
     private static void trySpawn(ServerLevel level, ServerPlayer player, Entry entry) {
         RandomSource random = level.random;
+        // Bicho de monstro não nasce no pacífico (lá ele some na hora, igual ao Bedrock).
+        if (level.getDifficulty() == Difficulty.PEACEFUL && !entry.type().getCategory().isFriendly()) {
+            return;
+        }
         if (random.nextFloat() > entry.chance()) {
             return;
         }
@@ -98,6 +111,8 @@ public final class DimensionMobSpawner {
         }
 
         int count = random.nextInt(entry.herd()) + 2;
+        // Passa de um mob pro outro, como no spawn natural. Nos bichos que crescem, é o que faz nascer filhote no grupo.
+        SpawnGroupData group = null;
         for (int i = 0; i < count; i++) {
             Mob mob = entry.type().create(level);
             if (mob == null) {
@@ -107,7 +122,7 @@ public final class DimensionMobSpawner {
             // Aqui cada um procura um bloco livre do chão da entrada perto do ponto do grupo.
             BlockPos pos = spread(level, mob, spawn, entry.ground(), random);
             mob.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, random.nextFloat() * 360.0f, 0.0f);
-            mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawn), MobSpawnType.NATURAL, null, null);
+            group = mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawn), MobSpawnType.NATURAL, group, null);
             level.addFreshEntity(mob);
         }
     }

@@ -1,6 +1,7 @@
 package com.twistedteam.twistedlands;
 
 import com.twistedteam.twistedlands.entities.*;
+import com.twistedteam.twistedlands.projectiles.IrukandjiArrowEntity;
 import com.twistedteam.twistedlands.projectiles.ThrownAxeEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 public class TwistedLandsEntities {
@@ -34,6 +36,52 @@ public class TwistedLandsEntities {
                     new ResourceLocation(TwistedLands.MOD_ID, "enchanted_golden_apple_cow"),
                     EntityType.Builder.of(EnchantedGoldenAppleCow::new, MobCategory.CREATURE)
                             .sized(0.9f, 1.4f).build("enchanted_golden_apple_cow"));
+
+    // collision_box do addon: 0.9 x 1.3.
+    public static final EntityType<CrystalAppleCowEntity> CRYSTAL_APPLE_COW =
+            Registry.register(BuiltInRegistries.ENTITY_TYPE,
+                    TwistedLands.id("crystal_apple_cow"),
+                    EntityType.Builder.of(CrystalAppleCowEntity::new, MobCategory.CREATURE)
+                            .sized(0.9f, 1.3f).build("crystal_apple_cow"));
+
+    // collision_box do addon: 0.9 x 1.3. O filhote fica com a metade, igual ao scale 0.5 do addon.
+    public static final EntityType<PeacockEntity> PEACOCK = Registry.register(BuiltInRegistries.ENTITY_TYPE,
+            TwistedLands.id("peacock"),
+            FabricEntityTypeBuilder.<PeacockEntity>createMob()
+                    .spawnGroup(MobCategory.CREATURE)
+                    .entityFactory(PeacockEntity::new)
+                    .dimensions(EntityDimensions.scalable(0.9f, 1.3f))
+                    .defaultAttributes(PeacockEntity::createAttributes)
+                    .build());
+
+    // collision_box do addon: 1.5 x 1.5.
+    public static final EntityType<IrukandjiEntity> IRUKANDJI = Registry.register(BuiltInRegistries.ENTITY_TYPE,
+            TwistedLands.id("irukandji"),
+            FabricEntityTypeBuilder.<IrukandjiEntity>createMob()
+                    .spawnGroup(MobCategory.WATER_CREATURE)
+                    .entityFactory(IrukandjiEntity::new)
+                    .dimensions(EntityDimensions.scalable(1.5f, 1.5f))
+                    .defaultAttributes(IrukandjiEntity::createAttributes)
+                    .spawnRestriction(SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, IrukandjiEntity::canSpawn)
+                    .build());
+
+    public static final EntityType<IrukandjiArrowEntity> IRUKANDJI_ARROW = Registry.register(BuiltInRegistries.ENTITY_TYPE,
+            TwistedLands.id("irukandji_arrow"),
+            EntityType.Builder.<IrukandjiArrowEntity>of(IrukandjiArrowEntity::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .clientTrackingRange(4)
+                    .updateInterval(20)
+                    .build("irukandji_arrow"));
+
+    // Sem collision_box no addon: o padrão do Bedrock, 1 x 1.
+    public static final EntityType<BalloonSharkEntity> BALLOON_SHARK = Registry.register(BuiltInRegistries.ENTITY_TYPE,
+            TwistedLands.id("balloon_shark"),
+            FabricEntityTypeBuilder.<BalloonSharkEntity>createMob()
+                    .spawnGroup(MobCategory.MONSTER)
+                    .entityFactory(BalloonSharkEntity::new)
+                    .dimensions(EntityDimensions.scalable(1.0f, 1.0f))
+                    .defaultAttributes(BalloonSharkEntity::createAttributes)
+                    .build());
 
     public static final EntityType<MobjiraEntity> MOBJIRA =
             Registry.register(BuiltInRegistries.ENTITY_TYPE,
@@ -106,5 +154,10 @@ public class TwistedLandsEntities {
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), MobCategory.MONSTER, RAINBOW_ANT, 1, 1, 3);
         // O rato é population "animal" no addon, nos biomas com a tag caves (lush, dripstone e deep dark).
         BiomeModifications.addSpawn(BiomeSelectors.tag(ConventionalBiomeTags.CAVES), MobCategory.CREATURE, RAT, 100, 1, 4);
+        // As duas spawn rules do irukandji no addon: oceano quente ou morno (peso 25) e qualquer água do overworld
+        // (peso 100), os dois de 1 a 3.
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.WARM_OCEAN, Biomes.LUKEWARM_OCEAN, Biomes.DEEP_LUKEWARM_OCEAN),
+                MobCategory.WATER_CREATURE, IRUKANDJI, 25, 1, 3);
+        BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), MobCategory.WATER_CREATURE, IRUKANDJI, 100, 1, 3);
     }
 }
