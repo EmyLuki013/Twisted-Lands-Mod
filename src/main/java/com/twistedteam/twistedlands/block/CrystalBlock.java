@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -42,6 +43,18 @@ public class CrystalBlock extends DropExperienceBlock {
         @Override
         public boolean skipRendering(BlockState state, BlockState adjacent, Direction direction) {
             return adjacent.is(this) || super.skipRendering(state, adjacent, direction);
+        }
+
+        @Override
+        public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
+            return true;
+        }
+    }
+
+    /** As folhas de cristal. Diferente das folhas comuns, a luz passa inteira e elas não fazem sombra embaixo das ilhas. */
+    public static class Leaves extends Block {
+        public Leaves(Properties properties) {
+            super(properties);
         }
 
         @Override

@@ -342,11 +342,11 @@ public class TwistedLandsBlocks {
             "crystal_mushroom_stem"
     );
 
-    public static final Block CRYSTAL_LEAVES_BLUE = register(new Block(crystalLeaves(MapColor.COLOR_BLUE)), "crystal_leaves_blue");
-    public static final Block CRYSTAL_LEAVES_GREEN = register(new Block(crystalLeaves(MapColor.EMERALD)), "crystal_leaves_green");
-    public static final Block CRYSTAL_LEAVES_PINK = register(new Block(crystalLeaves(MapColor.CRIMSON_STEM)), "crystal_leaves_pink");
-    public static final Block CRYSTAL_LEAVES_PURPLE = register(new Block(crystalLeaves(MapColor.COLOR_PURPLE)), "crystal_leaves_purple");
-    public static final Block CRYSTAL_LEAVES_PURPLISH_RED = register(new Block(crystalLeaves(MapColor.COLOR_RED)), "crystal_leaves_purplish_red");
+    public static final Block CRYSTAL_LEAVES_BLUE = register(new CrystalBlock.Leaves(crystalLeaves(MapColor.COLOR_BLUE)), "crystal_leaves_blue");
+    public static final Block CRYSTAL_LEAVES_GREEN = register(new CrystalBlock.Leaves(crystalLeaves(MapColor.EMERALD)), "crystal_leaves_green");
+    public static final Block CRYSTAL_LEAVES_PINK = register(new CrystalBlock.Leaves(crystalLeaves(MapColor.CRIMSON_STEM)), "crystal_leaves_pink");
+    public static final Block CRYSTAL_LEAVES_PURPLE = register(new CrystalBlock.Leaves(crystalLeaves(MapColor.COLOR_PURPLE)), "crystal_leaves_purple");
+    public static final Block CRYSTAL_LEAVES_PURPLISH_RED = register(new CrystalBlock.Leaves(crystalLeaves(MapColor.COLOR_RED)), "crystal_leaves_purplish_red");
 
     public static final Block PURPLE_CRYSTAL_FLOWER = register(crystalFlower(), "purple_crystal_flower");
     public static final Block RED_CRYSTAL_FLOWER = register(crystalFlower(), "red_crystal_flower");

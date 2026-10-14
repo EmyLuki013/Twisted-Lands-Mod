@@ -1,5 +1,6 @@
 package com.twistedteam.twistedlands;
 
+import com.twistedteam.twistedlands.world.dream.CrystalTrunkPlacer;
 import com.twistedteam.twistedlands.world.feature.SpacingPlacement;
 import com.twistedteam.twistedlands.world.feature.TemplateFeature;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -11,6 +12,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
@@ -20,6 +22,9 @@ public class TwistedLandsFeatures {
 
     public static final PlacementModifierType<SpacingPlacement> SPACING =
             Registry.register(BuiltInRegistries.PLACEMENT_MODIFIER_TYPE, TwistedLands.id("spacing"), () -> SpacingPlacement.CODEC);
+
+    public static final TrunkPlacerType<CrystalTrunkPlacer> CRYSTAL_TRUNK_PLACER = Registry.register(
+            BuiltInRegistries.TRUNK_PLACER_TYPE, TwistedLands.id("crystal_trunk_placer"), new TrunkPlacerType<>(CrystalTrunkPlacer.CODEC));
 
     public static void initialize() {
         // Minério de sal no overworld inteiro e pés de tomate nas planícies, como as feature rules do addon.

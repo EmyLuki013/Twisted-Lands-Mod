@@ -1,0 +1,28 @@
+{
+  "feature": {
+    "type": "twisted:template",
+    "config": {
+      "templates": ["twisted:dream_world/mushroom_small", "twisted:dream_world/mushroom_medium", "twisted:dream_world/mushroom_large"],
+      "rotate": true,
+      "max_slope": 1,
+      "free": ["twisted:dream_world_grass_block"]
+    }
+  },
+  "placement": [
+    {
+      "type": "minecraft:noise_threshold_count",
+      "noise_level": 0.2,
+      "below_noise": 0,
+      "above_noise": 4
+    },
+    { "type": "minecraft:in_square" },
+    { "type": "minecraft:rarity_filter", "chance": 5 },
+    { "type": "minecraft:surface_water_depth_filter", "max_water_depth": 0 },
+    { "type": "minecraft:heightmap", "heightmap": "WORLD_SURFACE_WG" },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": { "type": "minecraft:matching_blocks", "offset": [0, -1, 0], "blocks": "twisted:dream_world_grass_block" }
+    },
+    { "type": "minecraft:biome" }
+  ]
+}
