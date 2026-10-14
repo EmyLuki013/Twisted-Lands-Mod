@@ -1,5 +1,6 @@
 package com.twistedteam.twistedlands.entities;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -21,11 +22,10 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -78,7 +78,7 @@ public class BalloonSharkEntity extends PathfinderMob implements Enemy, GeoEntit
 
     public BalloonSharkEntity(EntityType<? extends BalloonSharkEntity> type, Level level) {
         super(type, level);
-        moveControl = new FlyingMoveControl(this, 20, true);
+        moveControl = new HoverMoveControl(this);
         xpReward = 10;
     }
 
@@ -162,12 +162,10 @@ public class BalloonSharkEntity extends PathfinderMob implements Enemy, GeoEntit
                 new FirstApplicableBehaviour<BalloonSharkEntity>(
                         new TargetOrRetaliate<BalloonSharkEntity>()
                                 .attackablePredicate(this::isValidTarget),
-                        // random_hover: até 10 blocos pros lados e pra cima, de 3 a 10 acima do chão.
                         new SetRandomHoverTarget<BalloonSharkEntity>() {
                             @Override
                             protected Vec3 getTargetPos(BalloonSharkEntity shark) {
-                                Vec3 facing = shark.getViewVector(0);
-                                return HoverRandomPos.getPos(shark, 10, 10, facing.x, facing.z, Mth.HALF_PI, 10, 3);
+                                return shark.findHoverPos();
                             }
                         }.setRadius(10, 10)),
                 // look_at_player e look_at_entity: até 6 blocos, por 1 a 2s.
@@ -187,6 +185,41 @@ public class BalloonSharkEntity extends PathfinderMob implements Enemy, GeoEntit
                 new SetWalkTargetToAttackTarget<>(),
                 new AnimatableMeleeAttack<BalloonSharkEntity>(0))
                 .wipeMemoriesWhenFinished(MemoryModuleType.LOOK_TARGET);
+    }
+
+    // random_hover do addon: até 10 blocos pros lados e na altura, e de 3 a 10 acima do chão. O HoverRandomPos
+    // vanilla só garante a altura mínima, então o tubarão ia subindo a cada alvo novo até travar no teto.
+    @Nullable
+    private Vec3 findHoverPos() {
+        for (int attempt = 0; attempt < 10; attempt++) {
+            // Pra frente, até 90 graus pra cada lado, igual ao HoverRandomPos.
+            float yaw = (getYRot() + (random.nextFloat() - 0.5f) * 180.0f) * Mth.DEG_TO_RAD;
+            double distance = 2.0 + random.nextDouble() * 8.0;
+            BlockPos column = BlockPos.containing(getX() - Mth.sin(yaw) * distance, getY(), getZ() + Mth.cos(yaw) * distance);
+            Integer ground = groundBelow(column);
+            if (ground == null) {
+                continue;
+            }
+            double y = Mth.clamp(ground + 3 + random.nextInt(8), getY() - 10, getY() + 10);
+            Vec3 pos = new Vec3(column.getX() + 0.5, y, column.getZ() + 0.5);
+            if (level().noCollision(this, getBoundingBox().move(pos.subtract(position())))) {
+                return pos;
+            }
+        }
+        return null;
+    }
+
+    // Primeiro bloco sólido (ou líquido) descendo de 10 acima até 32 abaixo do tubarão. Nulo sobre o vazio.
+    @Nullable
+    private Integer groundBelow(BlockPos column) {
+        BlockPos.MutableBlockPos pos = column.mutable().move(0, 10, 0);
+        int bottom = Math.max(level().getMinBuildHeight(), column.getY() - 32);
+        for (; pos.getY() >= bottom; pos.move(0, -1, 0)) {
+            if (!level().getBlockState(pos).getCollisionShape(level(), pos).isEmpty() || !level().getFluidState(pos).isEmpty()) {
+                return pos.getY() + 1;
+            }
+        }
+        return null;
     }
 
     // Jogador fora do criativo ou quem bateu nele.
@@ -237,6 +270,51 @@ public class BalloonSharkEntity extends PathfinderMob implements Enemy, GeoEntit
             }
         }
         super.die(source);
+    }
+
+    /**
+     * FlyingMoveControl vanilla com duas mudanças. Em subida ou descida quase reta o alvo fica a poucos décimos
+     * pro lado e o atan2 desse resto virava o tubarão até 90 graus por tick, que era o giro do nada. Agora o
+     * yaw só muda quando o alvo está a mais de meio bloco na horizontal, e no máximo 30 graus por tick
+     * (o max_turn padrão do movement.hover do addon).
+     */
+    private static class HoverMoveControl extends MoveControl {
+        private static final float MAX_TURN = 30.0f;
+
+        HoverMoveControl(Mob mob) {
+            super(mob);
+        }
+
+        @Override
+        public void tick() {
+            if (operation != Operation.MOVE_TO) {
+                mob.setYya(0.0f);
+                mob.setZza(0.0f);
+                return;
+            }
+            operation = Operation.WAIT;
+            mob.setNoGravity(true);
+            double dx = wantedX - mob.getX();
+            double dy = wantedY - mob.getY();
+            double dz = wantedZ - mob.getZ();
+            double horizontal = Math.sqrt(dx * dx + dz * dz);
+            if (horizontal * horizontal + dy * dy < 2.5E-7) {
+                mob.setYya(0.0f);
+                mob.setZza(0.0f);
+                return;
+            }
+            boolean turn = horizontal > 0.5;
+            if (turn) {
+                float yaw = (float) (Mth.atan2(dz, dx) * Mth.RAD_TO_DEG) - 90.0f;
+                mob.setYRot(rotlerp(mob.getYRot(), yaw, MAX_TURN));
+            }
+            float speed = (float) (speedModifier * mob.getAttributeValue(mob.onGround() ? Attributes.MOVEMENT_SPEED : Attributes.FLYING_SPEED));
+            // Na subida reta não anda pra frente, senão sai pro lado que estiver olhando.
+            mob.setSpeed(turn ? speed : 0.0f);
+            float pitch = (float) -(Mth.atan2(dy, horizontal) * Mth.RAD_TO_DEG);
+            mob.setXRot(rotlerp(mob.getXRot(), pitch, MAX_TURN));
+            mob.setYya(Math.abs(dy) > 1.0E-5 ? (dy > 0.0 ? speed : -speed) : 0.0f);
+        }
     }
 
     @Override
